@@ -1,0 +1,7 @@
+{
+  "name": "My Final File",
+  "description": "A secure digital vault for all your life's assets, ensuring your family's financial future is protected with nominee access and emergency protocols. Supported in English and Hindi.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
