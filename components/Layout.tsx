@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, Language } from '../types';
-import { LayoutDashboard, Wallet, Users, AlertCircle, FolderKey, LogOut, Languages, Headset } from 'lucide-react';
+import { LayoutDashboard, Wallet, Users, AlertCircle, FolderKey, LogOut, Languages, Headset, Settings } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -20,6 +20,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
     { id: 'emergency', label: t.emergencyAccess, icon: <AlertCircle size={20} />, color: 'red' },
     { id: 'kit', label: 'Kit', icon: <FolderKey size={20} />, color: 'slate' },
     { id: 'support', label: t.customerCare, icon: <Headset size={20} />, color: 'emerald' },
+    { id: 'settings', label: 'Settings', icon: <Settings size={20} />, color: 'slate' },
   ];
 
   const currentTheme = navItems.find(i => i.id === currentView)?.color || 'yellow';
@@ -38,25 +39,25 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
   return (
     <div className={`min-h-screen pb-24 md:pb-0 md:pl-72 flex flex-col transition-all duration-700`}>
       {/* Sidebar - Desktop */}
-      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-72 bg-slate-950/80 backdrop-blur-3xl text-white flex-col z-40 border-r border-white/5">
-        <div className="p-10 mb-6">
+      <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 bg-slate-950/80 backdrop-blur-3xl text-white flex-col z-40 border-r border-white/5">
+        <div className="p-8 mb-4">
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setView('dashboard')}>
-             <div className="w-12 h-12 gold-gradient rounded-2xl flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110">M</div>
+             <div className="w-10 h-10 gold-gradient rounded-xl flex items-center justify-center font-black text-slate-950 text-lg shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110">M</div>
              <div>
-               <h1 className="font-black text-2xl tracking-tighter uppercase gold-text leading-none">{t.title}</h1>
-               <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none">Safe • Secure</span>
+               <h1 className="font-black text-xl tracking-tighter uppercase gold-text leading-none">{t.title}</h1>
+               <span className="text-[8px] text-slate-500 font-bold uppercase tracking-widest leading-none">Safe • Secure</span>
              </div>
           </div>
         </div>
         
-        <nav className="flex-1 px-6 space-y-3">
+        <nav className="flex-1 px-4 space-y-2">
           {navItems.map(item => (
             <button
               key={item.id}
               onClick={() => setView(item.id as View)}
-              className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl font-bold text-sm transition-all duration-500 ${
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-xs transition-all duration-500 ${
                 currentView === item.id 
-                  ? `${theme.bg} ${theme.text} ${theme.shadow} shadow-2xl scale-[1.05]` 
+                  ? `${theme.bg} ${theme.text} ${theme.shadow} shadow-2xl scale-[1.02]` 
                   : 'text-slate-500 hover:text-white hover:bg-white/5'
               }`}
             >
@@ -66,60 +67,42 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
           ))}
         </nav>
 
-        <div className="p-8 space-y-4">
-          <button 
-            onClick={() => {
-              const newLang = lang === 'en' ? 'hi' : 'en';
-              setLang(newLang);
-              localStorage.setItem('mff_lang', newLang);
-            }}
-            className="w-full bg-slate-900/50 border border-white/5 px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-slate-800 hover:border-yellow-500/30 transition-all"
-          >
-            <Languages size={16} className="text-yellow-500" />
-            {lang === 'en' ? 'हिन्दी में बदलें' : 'Switch to English'}
-          </button>
-          
+        <div className="p-6 space-y-3">
           <button 
             onClick={() => window.location.reload()}
-            className="w-full px-6 py-4 text-slate-500 hover:text-red-400 font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-colors"
+            className="w-full px-4 py-3 text-slate-500 hover:text-red-400 font-black text-[9px] uppercase tracking-widest flex items-center justify-center gap-2 transition-colors"
           >
-            <LogOut size={16} /> Logout
+            <LogOut size={14} /> Logout
           </button>
         </div>
       </aside>
 
       {/* Header - Mobile */}
-      <header className="md:hidden bg-slate-950/90 backdrop-blur-xl border-b border-white/5 p-5 flex items-center justify-between sticky top-0 z-40">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 gold-gradient rounded flex items-center justify-center font-black text-slate-950 text-xs shadow shadow-yellow-500/20">M</div>
-          <h1 className="font-black text-white text-lg tracking-tighter uppercase gold-text leading-none">{t.title}</h1>
+      <header className="md:hidden bg-slate-950/90 backdrop-blur-xl border-b border-white/5 p-4 flex items-center justify-between sticky top-0 z-40">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 gold-gradient rounded flex items-center justify-center font-black text-slate-950 text-[10px] shadow shadow-yellow-500/20">M</div>
+          <h1 className="font-black text-white text-base tracking-tighter uppercase gold-text leading-none">{t.title}</h1>
         </div>
-        <button 
-          onClick={() => setLang(lang === 'en' ? 'hi' : 'en')}
-          className="bg-white/10 text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10 active:scale-95 transition-transform"
-        >
-          {lang === 'en' ? 'हिन्दी' : 'EN'}
-        </button>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 md:p-14 max-w-7xl mx-auto w-full view-transition">
+      <main className="flex-1 p-4 md:p-8 md:pl-72 max-w-7xl mx-auto w-full view-transition">
         {children}
       </main>
 
       {/* Tab Bar - Mobile */}
-      <nav className="md:hidden fixed bottom-6 left-6 right-6 bg-slate-950/80 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] flex items-center justify-around p-3 z-40 shadow-2xl">
+      <nav className="md:hidden fixed bottom-4 left-4 right-4 bg-slate-950/80 backdrop-blur-3xl border border-white/10 rounded-[2rem] flex items-center justify-around p-2 z-40 shadow-2xl">
         {navItems.map(item => (
           <button
             key={item.id}
             onClick={() => setView(item.id as View)}
-            className={`flex flex-col items-center gap-1.5 p-4 rounded-2xl transition-all duration-500 ${
+            className={`flex flex-col items-center gap-1 p-3 rounded-xl transition-all duration-500 ${
               currentView === item.id 
                 ? `${theme.bg} ${theme.text} scale-110 shadow-xl` 
                 : 'text-slate-500'
             }`}
           >
-            {item.icon}
+            {React.cloneElement(item.icon, { size: 18 })}
           </button>
         ))}
       </nav>

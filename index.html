@@ -125,6 +125,16 @@
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-20px); }
       }
+
+      /* Light Theme Override */
+      html.light-theme {
+        filter: invert(1) hue-rotate(180deg);
+      }
+      html.light-theme img, 
+      html.light-theme video,
+      html.light-theme .recharts-wrapper {
+        filter: invert(1) hue-rotate(180deg);
+      }
     </style>
     <script type="importmap">
     {

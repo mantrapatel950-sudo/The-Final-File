@@ -110,16 +110,16 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
 
   return (
     <div className="space-y-12 stagger-in">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
         <div className="space-y-2">
-          <div className="h-px w-20 bg-blue-500/30 mb-4"></div>
-          <h2 className="text-5xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">{t.myAssets}</h2>
-          <p className="text-slate-500 font-black uppercase text-[10px] tracking-[0.4em]">Precision Legacy Inventory</p>
+          <div className="h-px w-16 md:w-20 bg-blue-500/30 mb-4"></div>
+          <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">{t.myAssets}</h2>
+          <p className="text-slate-500 font-black uppercase text-[8px] md:text-[10px] tracking-[0.4em]">Precision Legacy Inventory</p>
         </div>
         {!isAdding && (
           <button 
             onClick={() => setIsAdding(true)}
-            className="group bg-blue-600 text-white px-10 py-5 rounded-[2.5rem] font-black text-sm flex items-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-blue-500/20 active:scale-95"
+            className="w-full md:w-auto group bg-blue-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm flex items-center justify-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-blue-500/20 active:scale-95"
           >
             <Plus size={20} strokeWidth={4} /> {t.addAsset}
           </button>
@@ -127,7 +127,7 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
       </div>
 
       {isAdding && (
-        <div className="bg-slate-900/40 backdrop-blur-3xl p-10 md:p-14 rounded-[4rem] shadow-2xl border border-white/10 animate-reveal relative overflow-hidden">
+        <div className="bg-slate-900/40 backdrop-blur-3xl p-6 md:p-14 rounded-[2rem] md:rounded-[4rem] shadow-2xl border border-white/10 animate-reveal relative overflow-hidden">
           {/* Form Progress Indicator */}
           <div className="absolute top-0 left-0 w-full flex h-1.5">
              <div className={`h-full bg-blue-500 transition-all duration-700 ${step >= 1 ? 'w-1/3' : 'w-0'}`}></div>
@@ -135,26 +135,26 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
              <div className={`h-full bg-blue-500 transition-all duration-700 ${step >= 3 ? 'w-1/3' : 'w-0'}`}></div>
           </div>
           
-          <div className="flex justify-between items-start mb-16">
+          <div className="flex justify-between items-start mb-10 md:mb-16">
             <div>
-              <h3 className="text-4xl font-black text-white uppercase tracking-tighter mb-4">{t.addAsset}</h3>
-              <div className="flex items-center gap-3 text-slate-500 text-[10px] font-black uppercase tracking-[0.4em]">
+              <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-2 md:mb-4">{t.addAsset}</h3>
+              <div className="flex items-center gap-2 md:gap-3 text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em]">
                 <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
                 Vault Step {step} of 3
               </div>
             </div>
-            <button onClick={resetAddForm} className="bg-white/5 p-4 rounded-full text-slate-500 hover:text-white transition-all hover:bg-white/10 border border-white/5">
-              <X size={24} />
+            <button onClick={resetAddForm} className="bg-white/5 p-3 md:p-4 rounded-full text-slate-500 hover:text-white transition-all hover:bg-white/10 border border-white/5">
+              <X size={20} className="md:w-6 md:h-6" />
             </button>
           </div>
 
           {step === 1 && (
-            <div className="space-y-12 animate-in slide-in-from-right-10 duration-500">
-               <div className="space-y-4">
-                  <h4 className="text-xl font-black text-white uppercase tracking-tighter">Choose Category</h4>
-                  <p className="text-slate-500 text-sm font-medium">Select the type of asset to initialize encryption.</p>
+            <div className="space-y-8 md:space-y-12 animate-in slide-in-from-right-10 duration-500">
+               <div className="space-y-2 md:space-y-4">
+                  <h4 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Choose Category</h4>
+                  <p className="text-slate-500 text-xs md:text-sm font-medium">Select the type of asset to initialize encryption.</p>
                </div>
-               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
                 {Object.values(AssetType).map(type => (
                   <button
                     key={type}
@@ -163,16 +163,16 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
                       setSearchTerm('');
                       setStep(2);
                     }}
-                    className={`relative group flex flex-col items-center justify-center p-8 rounded-[3.5rem] border-2 transition-all duration-500 ${
+                    className={`relative group flex flex-col items-center justify-center p-4 md:p-8 rounded-[1.5rem] md:rounded-[3.5rem] border-2 transition-all duration-500 ${
                       newAsset.type === type 
-                        ? 'border-blue-500 bg-blue-500/10 text-white ring-8 ring-blue-500/5 scale-105 shadow-2xl shadow-blue-500/20' 
+                        ? 'border-blue-500 bg-blue-500/10 text-white ring-4 md:ring-8 ring-blue-500/5 scale-105 shadow-2xl shadow-blue-500/20' 
                         : 'border-white/5 bg-white/5 text-slate-500 hover:border-white/20 hover:bg-white/10 hover:-translate-y-2'
                     }`}
                   >
-                    <div className={`mb-6 transition-transform duration-500 group-hover:scale-110 ${newAsset.type === type ? 'text-blue-400' : 'text-slate-600'}`}>
+                    <div className={`mb-4 md:mb-6 transition-transform duration-500 group-hover:scale-110 ${newAsset.type === type ? 'text-blue-400' : 'text-slate-600'}`}>
                       {assetIcons[type]}
                     </div>
-                    <span className="text-[10px] font-black uppercase tracking-widest text-center leading-tight">{t.assetTypes[type]}</span>
+                    <span className="text-[8px] md:text-[10px] font-black uppercase tracking-widest text-center leading-tight">{t.assetTypes[type]}</span>
                   </button>
                 ))}
               </div>
@@ -180,16 +180,16 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
           )}
 
           {step === 2 && (
-            <div className="space-y-12 animate-in slide-in-from-right-10 duration-500">
-               <div className="space-y-4">
-                  <h4 className="text-xl font-black text-white uppercase tracking-tighter">Security Details</h4>
-                  <p className="text-slate-500 text-sm font-medium">Specify the institution and account identifiers.</p>
+            <div className="space-y-8 md:space-y-12 animate-in slide-in-from-right-10 duration-500">
+               <div className="space-y-2 md:space-y-4">
+                  <h4 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Security Details</h4>
+                  <p className="text-slate-500 text-xs md:text-sm font-medium">Specify the institution and account identifiers.</p>
                </div>
                
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
                  {/* Auto-suggest Search */}
-                 <div className="space-y-4 relative" ref={suggestionRef}>
-                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Institution / Body</label>
+                 <div className="space-y-3 md:space-y-4 relative" ref={suggestionRef}>
+                    <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Institution / Body</label>
                     <div className="relative group">
                       <input 
                         type="text"
@@ -200,9 +200,9 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
                           setNewAsset({...newAsset, institutionName: e.target.value});
                         }}
                         placeholder={`Search ${t.assetTypes[newAsset.type || AssetType.BANK]}...`}
-                        className="w-full pl-16 pr-12 py-7 bg-white/5 border border-white/10 rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-bold text-white text-lg shadow-inner"
+                        className="w-full pl-12 md:pl-16 pr-8 md:pr-12 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-bold text-white text-base md:text-lg shadow-inner"
                       />
-                      <Search className="absolute left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors" size={24} />
+                      <Search className="absolute left-5 md:left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors w-5 h-5 md:w-6 md:h-6" />
                     </div>
                     
                     {showSuggestions && (
@@ -238,27 +238,27 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
                     )}
                   </div>
 
-                  <div className="space-y-4">
-                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Secure Identifier (A/C, Folio, ID)</label>
+                  <div className="space-y-3 md:space-y-4">
+                    <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Secure Identifier (A/C, Folio, ID)</label>
                     <div className="relative group">
                       <input 
                         type="text"
                         value={newAsset.accountNo || ''}
                         onChange={e => setNewAsset({...newAsset, accountNo: e.target.value})}
                         placeholder="XXXX-XXXX-XXXX"
-                        className="w-full pl-16 pr-6 py-7 bg-white/5 border border-white/10 rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-mono font-black text-white text-lg tracking-widest shadow-inner"
+                        className="w-full pl-12 md:pl-16 pr-6 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-mono font-black text-white text-base md:text-lg tracking-widest shadow-inner"
                       />
-                      <FileText className="absolute left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors" size={24} />
+                      <FileText className="absolute left-5 md:left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors w-5 h-5 md:w-6 md:h-6" />
                     </div>
                   </div>
                </div>
 
-               <div className="flex gap-6">
-                 <button onClick={() => setStep(1)} className="px-10 py-6 rounded-[2rem] font-black text-slate-500 uppercase tracking-widest text-[11px] hover:text-white transition-colors">Go Back</button>
+               <div className="flex gap-4 md:gap-6">
+                 <button onClick={() => setStep(1)} className="px-6 md:px-10 py-5 md:py-6 rounded-[2rem] font-black text-slate-500 uppercase tracking-widest text-[9px] md:text-[11px] hover:text-white transition-colors">Go Back</button>
                  <button 
                   onClick={() => setStep(3)}
                   disabled={!newAsset.institutionName || !newAsset.accountNo}
-                  className="flex-1 gold-gradient text-slate-950 py-6 rounded-[2.5rem] font-black uppercase tracking-widest text-sm shadow-xl shadow-yellow-500/20 transition-all disabled:opacity-20"
+                  className="flex-1 gold-gradient text-slate-950 py-5 md:py-6 rounded-[2rem] md:rounded-[2.5rem] font-black uppercase tracking-widest text-xs md:text-sm shadow-xl shadow-yellow-500/20 transition-all disabled:opacity-20"
                  >
                    Next Stage
                  </button>
@@ -267,35 +267,35 @@ const AssetsView: React.FC<AssetsViewProps> = ({ assets, setAssets, t, lang }) =
           )}
 
           {step === 3 && (
-            <div className="space-y-12 animate-in slide-in-from-right-10 duration-500">
-               <div className="space-y-4">
-                  <h4 className="text-xl font-black text-white uppercase tracking-tighter">Final Calibration</h4>
-                  <p className="text-slate-500 text-sm font-medium">Add valuation and final instructions for the vault.</p>
+            <div className="space-y-8 md:space-y-12 animate-in slide-in-from-right-10 duration-500">
+               <div className="space-y-2 md:space-y-4">
+                  <h4 className="text-lg md:text-xl font-black text-white uppercase tracking-tighter">Final Calibration</h4>
+                  <p className="text-slate-500 text-xs md:text-sm font-medium">Add valuation and final instructions for the vault.</p>
                </div>
 
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <div className="space-y-4">
-                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Market Valuation (Optional)</label>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                  <div className="space-y-3 md:space-y-4">
+                    <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Market Valuation (Optional)</label>
                     <div className="relative group">
-                      <div className="absolute left-7 top-1/2 -translate-y-1/2 text-slate-500 font-black text-2xl group-focus-within:text-blue-500">₹</div>
+                      <div className="absolute left-5 md:left-7 top-1/2 -translate-y-1/2 text-slate-500 font-black text-xl md:text-2xl group-focus-within:text-blue-500">₹</div>
                       <input 
                         type="number"
                         value={newAsset.value || ''}
                         onChange={e => setNewAsset({...newAsset, value: Number(e.target.value)})}
                         placeholder="0.00"
-                        className="w-full pl-16 pr-6 py-7 bg-white/5 border border-white/10 rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-black text-4xl text-white group-hover:bg-white/10 shadow-inner"
+                        className="w-full pl-12 md:pl-16 pr-6 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-black text-2xl md:text-4xl text-white group-hover:bg-white/10 shadow-inner"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Succession Notes</label>
+                  <div className="space-y-3 md:space-y-4">
+                    <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.3em] ml-2">Succession Notes</label>
                     <textarea 
                       value={newAsset.notes || ''}
                       rows={1}
                       onChange={e => setNewAsset({...newAsset, notes: e.target.value})}
                       placeholder="Special instructions for heirs..."
-                      className="w-full px-8 py-7 bg-white/5 border border-white/10 rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium text-white resize-none text-lg shadow-inner"
+                      className="w-full px-6 md:px-8 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium text-white resize-none text-base md:text-lg shadow-inner"
                     />
                   </div>
                </div>
