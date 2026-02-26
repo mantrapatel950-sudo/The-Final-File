@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Nominee, Language } from '../types';
-import { User, ShieldCheck, Fingerprint, Loader2, CheckCircle2, X, Plus, Trash2, Smartphone, Shield, ExternalLink, KeyRound, Building, UserCheck } from 'lucide-react';
+import { User, ShieldCheck, Fingerprint, Loader2, CheckCircle2, X, Plus, Trash2, Smartphone, Shield, ExternalLink, KeyRound, Building, UserCheck, BookOpen } from 'lucide-react';
 
 interface NomineesViewProps {
   nominees: Nominee[];
@@ -20,6 +20,7 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
   const [showOtpInput, setShowOtpInput] = useState(false);
   const [otpValue, setOtpValue] = useState('');
   const [verificationMode, setVerificationMode] = useState<'manual' | 'digilocker' | null>(null);
+  const [showSebiLaws, setShowSebiLaws] = useState(false);
 
   const handleSave = () => {
     if (newNominee.name && newNominee.mobile && newNominee.aadharNo && newNominee.verified) {
@@ -88,14 +89,102 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
           <p className="text-slate-500 font-black uppercase text-[8px] md:text-[10px] tracking-[0.4em]">Authorized Nominee Vault</p>
         </div>
         {!isAdding && (
-          <button 
-            onClick={() => setIsAdding(true)}
-            className="w-full md:w-auto group bg-indigo-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm flex items-center justify-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-indigo-500/20 active:scale-95"
-          >
-            <Plus size={20} strokeWidth={4} /> {t.addNominee}
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+            <button 
+              onClick={() => setShowSebiLaws(true)}
+              className="w-full md:w-auto group bg-slate-800 text-white px-8 py-4 md:px-10 md:py-5 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm flex items-center justify-center gap-4 hover:bg-slate-700 transition-all border border-white/10 active:scale-95"
+            >
+              <BookOpen size={20} strokeWidth={4} /> SEBI Guidelines
+            </button>
+            <button 
+              onClick={() => setIsAdding(true)}
+              className="w-full md:w-auto group bg-indigo-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm flex items-center justify-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-indigo-500/20 active:scale-95"
+            >
+              <Plus size={20} strokeWidth={4} /> {t.addNominee}
+            </button>
+          </div>
         )}
       </div>
+
+      {showSebiLaws && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-slate-900 border border-white/10 rounded-[2rem] w-full max-w-3xl max-h-[80vh] overflow-hidden flex flex-col shadow-2xl animate-in zoom-in duration-300">
+            <div className="p-6 md:p-8 border-b border-white/10 flex items-center justify-between bg-slate-800/50">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center">
+                  <BookOpen size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">SEBI Nominee Laws</h3>
+                  <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Securities and Exchange Board of India</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowSebiLaws(false)}
+                className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            
+            <div className="p-6 md:p-8 overflow-y-auto space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                  <ShieldCheck size={18} className="text-indigo-400" /> 1. Mandatory Nomination
+                </h4>
+                <p className="pl-6 text-slate-400">
+                  SEBI has made it mandatory for all eligible trading and demat account holders to either provide a nomination or explicitly opt out of nomination through a formal declaration. Failure to do so will result in the freezing of the accounts for trading and demat operations.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                  <UserCheck size={18} className="text-indigo-400" /> 2. Multiple Nominees
+                </h4>
+                <p className="pl-6 text-slate-400">
+                  An investor can nominate up to three individuals for their demat and trading accounts. The investor must specify the percentage of share for each nominee, and the total must add up to exactly 100%. If no percentage is specified, the assets will be distributed equally among all surviving nominees.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                  <Building size={18} className="text-indigo-400" /> 3. Who Can Be a Nominee?
+                </h4>
+                <p className="pl-6 text-slate-400">
+                  A nominee can be any individual, including a minor. If a minor is nominated, the details of the guardian must be provided. Non-individuals such as a society, trust, body corporate, partnership firm, or Hindu Undivided Family (HUF) cannot be appointed as a nominee.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                  <KeyRound size={18} className="text-indigo-400" /> 4. Rights of the Nominee
+                </h4>
+                <p className="pl-6 text-slate-400">
+                  The nominee holds the assets in a fiduciary capacity (as a trustee) for the legal heirs of the deceased. The nomination does not override the laws of succession or a valid will. The nominee's primary role is to receive the assets from the depository/broker and hold them until the legal heirs claim them.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-lg flex items-center gap-2">
+                  <ExternalLink size={18} className="text-indigo-400" /> 5. Modification & Cancellation
+                </h4>
+                <p className="pl-6 text-slate-400">
+                  Nominations can be changed or cancelled at any time by the account holder. The latest nomination form submitted and registered with the Depository Participant (DP) or broker will supersede all previous nominations.
+                </p>
+              </div>
+            </div>
+            
+            <div className="p-6 border-t border-white/10 bg-slate-900/80 flex justify-end">
+              <button 
+                onClick={() => setShowSebiLaws(false)}
+                className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors"
+              >
+                Understood
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {isAdding && (
         <div className="bg-slate-900/40 backdrop-blur-3xl p-6 md:p-14 rounded-[2rem] md:rounded-[4rem] shadow-2xl border border-white/10 animate-reveal relative overflow-hidden">
@@ -251,7 +340,7 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
                         className="w-full flex items-center justify-center gap-3 md:gap-4 px-6 md:px-10 py-4 md:py-5 bg-[#0061e0] text-white rounded-[1.5rem] md:rounded-[2rem] text-[9px] md:text-[11px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20"
                       >
                         {verifying && verificationMode === 'digilocker' ? (
-                          <Loader2 className="animate-spin" size={18} className="md:w-5 md:h-5" />
+                          <Loader2 size={18} className="animate-spin md:w-5 md:h-5" />
                         ) : (
                           <>
                             {t.verifyViaDigiLocker} <ExternalLink size={16} className="md:w-[18px] md:h-[18px]" />

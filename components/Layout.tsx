@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Language } from '../types';
 import { LayoutDashboard, Wallet, Users, AlertCircle, FolderKey, LogOut, Languages, Headset, Settings } from 'lucide-react';
+import { AIChat } from './AIChat';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -86,8 +87,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-4 md:p-8 md:pl-72 max-w-7xl mx-auto w-full view-transition">
+      <main className="flex-1 p-4 md:p-8 md:pl-72 max-w-7xl mx-auto w-full view-transition relative">
         {children}
+        <AIChat />
       </main>
 
       {/* Tab Bar - Mobile */}

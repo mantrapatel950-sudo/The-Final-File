@@ -4,6 +4,7 @@ import { OAuth2Client } from "google-auth-library";
 import cookieParser from "cookie-parser";
 import path from "path";
 import dotenv from "dotenv";
+import twilio from "twilio";
 
 dotenv.config();
 
@@ -17,6 +18,75 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
+
+// Twilio Setup
+let twilioClient: twilio.Twilio | null = null;
+const getTwilioClient = () => {
+  if (!twilioClient) {
+    const accountSid = process.env.TWILIO_ACCOUNT_SID;
+    const authToken = process.env.TWILIO_AUTH_TOKEN;
+    if (accountSid && authToken) {
+      twilioClient = twilio(accountSid, authToken);
+    }
+  }
+  return twilioClient;
+};
+
+// In-memory OTP store for demo purposes
+const otpStore = new Map<string, { otp: string, expiresAt: number }>();
+
+// API route to send OTP
+app.post("/api/auth/send-otp", async (req, res) => {
+  const { mobile } = req.body;
+  if (!mobile || mobile.length !== 10) {
+    return res.status(400).json({ error: "Invalid mobile number" });
+  }
+
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  otpStore.set(mobile, { otp, expiresAt: Date.now() + 5 * 60 * 1000 }); // 5 mins expiry
+
+  const tClient = getTwilioClient();
+  if (tClient && process.env.TWILIO_PHONE_NUMBER) {
+    try {
+      await tClient.messages.create({
+        body: `Your My Final File secure vault OTP is ${otp}. Do not share this with anyone.`,
+        from: process.env.TWILIO_PHONE_NUMBER,
+        to: `+91${mobile}`
+      });
+      console.log(`Sent OTP ${otp} to +91${mobile} via Twilio`);
+      return res.json({ success: true, message: "OTP sent successfully" });
+    } catch (error: any) {
+      console.error("Twilio error:", error);
+      return res.status(500).json({ error: "Failed to send OTP via SMS. Please check Twilio configuration." });
+    }
+  } else {
+    // Fallback for demo if Twilio is not configured
+    console.log(`[MOCK SMS] OTP for +91${mobile} is ${otp}`);
+    return res.json({ success: true, message: "Mock OTP sent (check server console)", mock: true });
+  }
+});
+
+// API route to verify OTP
+app.post("/api/auth/verify-otp", (req, res) => {
+  const { mobile, otp } = req.body;
+  const storedData = otpStore.get(mobile);
+
+  if (!storedData) {
+    return res.status(400).json({ error: "OTP not requested or expired" });
+  }
+
+  if (Date.now() > storedData.expiresAt) {
+    otpStore.delete(mobile);
+    return res.status(400).json({ error: "OTP expired" });
+  }
+
+  if (storedData.otp === otp) {
+    otpStore.delete(mobile);
+    return res.json({ success: true, message: "OTP verified successfully" });
+  } else {
+    return res.status(400).json({ error: "Invalid OTP" });
+  }
+});
 
 // Helper to get redirect URI
 const getRedirectUri = (req: express.Request) => {

@@ -1,7 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { Language } from '../types';
-import { ChevronLeft, Smartphone, KeyRound, ArrowRight, CheckCircle2, ShieldCheck, Lock, Fingerprint, Loader2, Chrome } from 'lucide-react';
+import { ChevronLeft, Smartphone, KeyRound, ArrowRight, CheckCircle2, ShieldCheck, Lock, Fingerprint, Loader2, Chrome, QrCode, ScanLine } from 'lucide-react';
+import { QRCodeSVG } from 'qrcode.react';
+import QRScanner from '../components/QRScanner';
 
 interface LoginProps {
   lang: Language;
@@ -15,6 +17,7 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
+  const [loginMode, setLoginMode] = useState<'form' | 'qr'>('form');
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
@@ -85,6 +88,23 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
     }
   };
 
+  const [isMobileDevice, setIsMobileDevice] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobileDevice(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const qrCodeData = "mff-auth-token-12345"; // Simulated token for QR
+
+  const handleQRScan = (data: string) => {
+    if (data === qrCodeData) {
+      setSuccess(true);
+      setTimeout(onLogin, 1000);
+    }
+  };
+
   if (success) {
     return (
       <div className="min-h-screen bg-[#020617] flex items-center justify-center p-4 md:p-6">
@@ -101,6 +121,22 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
 
   return (
     <div className="min-h-screen bg-[#020617] flex flex-col items-center justify-center p-4 md:p-6 relative overflow-hidden">
+      {/* Top Right Logo */}
+      <div className="absolute top-6 right-6 md:top-10 md:right-10 z-50">
+        <button 
+          onClick={() => setLoginMode(loginMode === 'qr' ? 'form' : 'qr')}
+          className="flex items-center gap-3 group"
+        >
+           <div className="text-right hidden sm:block">
+             <div className="text-white font-black tracking-widest uppercase text-xs">My Final File</div>
+             <div className="text-yellow-500 text-[8px] tracking-[0.3em] uppercase">QR Login</div>
+           </div>
+           <div className="w-10 h-10 md:w-12 md:h-12 gold-gradient rounded-xl flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110">
+             M
+           </div>
+        </button>
+      </div>
+
       {/* Background Security Aura */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-yellow-500/5 blur-[100px] md:blur-[140px] rounded-full animate-pulse pointer-events-none"></div>
       
@@ -122,7 +158,7 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
                 <Lock className="text-yellow-500 w-6 h-6 md:w-8 md:h-8" />
               </div>
               <h2 className="text-2xl md:text-4xl font-black text-white mb-2 uppercase tracking-tighter">
-                {isRegistering ? 'Create Vault' : t.loginTitle}
+                {loginMode === 'qr' ? 'QR Access' : (isRegistering ? 'Create Vault' : t.loginTitle)}
               </h2>
               <div className="flex items-center gap-2 md:gap-3 justify-center text-slate-500 font-bold text-[8px] md:text-[10px] uppercase tracking-[0.3em]">
                  <ShieldCheck size={12} className="text-yellow-500 md:w-[14px] md:h-[14px]" /> AES-256 Bit Verified
@@ -130,7 +166,29 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
             </div>
 
             <div className="p-6 md:p-12">
-              {!otpSent ? (
+              {loginMode === 'qr' ? (
+                <div className="space-y-8 animate-in zoom-in duration-500 text-center">
+                  {isMobileDevice ? (
+                    <div className="space-y-6">
+                      <p className="text-slate-400 font-bold text-sm">Scan the QR code displayed on your PC to login.</p>
+                      <QRScanner onScan={handleQRScan} />
+                    </div>
+                  ) : (
+                    <div className="space-y-6 flex flex-col items-center">
+                      <p className="text-slate-400 font-bold text-sm">Scan this QR code with your mobile device to login.</p>
+                      <div className="bg-white p-4 rounded-2xl shadow-[0_0_40px_rgba(255,255,255,0.1)]">
+                        <QRCodeSVG value={qrCodeData} size={200} />
+                      </div>
+                    </div>
+                  )}
+                  <button 
+                    onClick={() => setLoginMode('form')}
+                    className="mt-8 text-slate-400 hover:text-white text-xs md:text-sm font-bold tracking-wide transition-colors"
+                  >
+                    Back to Mobile Login
+                  </button>
+                </div>
+              ) : !otpSent ? (
                 <form onSubmit={handleSendOtp} className="space-y-6 md:space-y-10">
                   {isRegistering && (
                     <>
@@ -220,6 +278,18 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
                       <Chrome className="text-slate-950" size={20} />
                     </div>
                     Sign in with Google
+                  </button>
+
+                  <button 
+                    type="button"
+                    onClick={() => setLoginMode('qr')}
+                    disabled={loading}
+                    className="w-full py-5 md:py-6 rounded-[2rem] md:rounded-[2.5rem] bg-white/5 border border-white/10 text-white font-black text-base md:text-lg flex items-center justify-center gap-4 hover:bg-white/10 transition-all active:scale-95 group"
+                  >
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-slate-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      {isMobileDevice ? <ScanLine className="text-white" size={20} /> : <QrCode className="text-white" size={20} />}
+                    </div>
+                    {isMobileDevice ? 'Scan QR Code' : 'Login with QR Code'}
                   </button>
                 </form>
               ) : (
