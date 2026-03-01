@@ -48,6 +48,7 @@ export const translations = {
     enterOtp: "Identity Code",
     otpSent: "OTP dispatched to secure device",
     verifyOtp: "Confirm Identity",
+    subscription: "Premium Upgrade",
     assetTypes: {
       Stocks: "Equities",
       "Mutual Funds": "Managed Funds",
@@ -105,6 +106,7 @@ export const translations = {
     enterOtp: "पहचान कोड",
     otpSent: "पंजीकृत डिवाइस पर ओटीपी भेजा गया",
     verifyOtp: "पहचान की पुष्टि करें",
+    subscription: "प्रीमियम अपग्रेड",
     assetTypes: {
       Stocks: "शेयर",
       "Mutual Funds": "म्यूचुअल फंड",

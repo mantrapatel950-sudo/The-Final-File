@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { View, Language } from '../types';
-import { LayoutDashboard, Wallet, Users, AlertCircle, FolderKey, LogOut, Languages, Headset, Settings } from 'lucide-react';
+import { LayoutDashboard, Wallet, Users, AlertCircle, FolderKey, LogOut, Languages, Headset, Settings, Crown } from 'lucide-react';
 import { AIChat } from './AIChat';
 
 interface LayoutProps {
@@ -21,6 +21,7 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
     { id: 'emergency', label: t.emergencyAccess, icon: <AlertCircle size={20} />, color: 'red' },
     { id: 'kit', label: 'Kit', icon: <FolderKey size={20} />, color: 'slate' },
     { id: 'support', label: t.customerCare, icon: <Headset size={20} />, color: 'emerald' },
+    { id: 'subscription', label: t.subscription || 'Premium', icon: <Crown size={20} />, color: 'yellow' },
     { id: 'settings', label: 'Settings', icon: <Settings size={20} />, color: 'slate' },
   ];
 

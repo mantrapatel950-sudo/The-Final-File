@@ -10,6 +10,7 @@ import EmergencyView from './views/EmergencyView';
 import MarketingLegalView from './views/MarketingLegalView';
 import SupportView from './views/SupportView';
 import SettingsView from './views/SettingsView';
+import SubscriptionView from './views/SubscriptionView';
 import { Layout } from './components/Layout';
 import { ShieldCheck, Landmark, Users, Zap, CheckCircle2, Lock, Smartphone, HeartPulse, Loader2, Sparkles, ChevronRight, Globe, Fingerprint, ShieldAlert, FileText, Cpu, Hexagon } from 'lucide-react';
 
@@ -162,6 +163,7 @@ const App: React.FC = () => {
             {view === 'emergency' && <EmergencyView rule={emergencyRule} setRule={setEmergencyRule} t={t} />}
             {view === 'kit' && <MarketingLegalView t={t} lang={lang} />}
             {view === 'support' && <SupportView t={t} />}
+            {view === 'subscription' && <SubscriptionView t={t} />}
             {view === 'settings' && <SettingsView lang={lang} setLang={setLang} theme={theme} setTheme={setTheme} t={t} />}
           </Layout>
         );

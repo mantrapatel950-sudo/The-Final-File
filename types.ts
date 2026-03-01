@@ -36,4 +36,4 @@ export interface EmergencyRule {
   requireDeathProof: boolean;
 }
 
-export type View = 'login' | 'dashboard' | 'assets' | 'nominees' | 'emergency' | 'kit' | 'support' | 'settings';
+export type View = 'login' | 'dashboard' | 'assets' | 'nominees' | 'emergency' | 'kit' | 'support' | 'settings' | 'subscription';

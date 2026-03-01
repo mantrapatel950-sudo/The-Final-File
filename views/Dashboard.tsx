@@ -138,6 +138,20 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
 
         {/* Action List Sidebar */}
         <div className="md:col-span-12 lg:col-span-4 space-y-4 md:space-y-6">
+          <div onClick={() => setView('subscription')} className="cursor-pointer group glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden border border-yellow-500/20 bg-yellow-500/5">
+            <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:scale-125 transition-transform duration-700 text-yellow-500">
+              <Award size={60} className="md:w-[80px] md:h-[80px]" />
+            </div>
+            <div className="w-12 h-12 md:w-16 md:h-16 bg-yellow-500/20 text-yellow-500 rounded-2xl md:rounded-3xl border border-yellow-500/30 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-yellow-500 group-hover:text-slate-900 transition-all duration-500 shadow-lg">
+              <Award size={24} className="md:w-8 md:h-8" />
+            </div>
+            <h3 className="text-yellow-500/80 font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] mb-1 md:mb-2">Premium Plan</h3>
+            <p className="text-xl md:text-2xl font-black text-white leading-none tracking-tight">Upgrade Now</p>
+            <div className="mt-4 md:mt-8 flex items-center text-yellow-500 font-black text-[8px] md:text-[10px] uppercase tracking-widest gap-2 group-hover:translate-x-2 transition-transform">
+              View Benefits <ChevronRight size={14} />
+            </div>
+          </div>
+
           <div onClick={() => setView('nominees')} className="cursor-pointer group glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden">
             <div className="absolute top-0 right-0 p-6 md:p-8 opacity-5 group-hover:scale-125 transition-transform duration-700">
               <Users size={60} className="md:w-[80px] md:h-[80px]" />
