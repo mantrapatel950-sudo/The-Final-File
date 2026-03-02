@@ -223,6 +223,53 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
 
         <GeminiAssistant t={t} />
       </div>
+
+      {/* Recent Transactions */}
+      <div className="glass-card p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/5">
+        <div className="flex items-center justify-between mb-6 md:mb-8">
+          <h3 className="font-black text-xl md:text-3xl text-white tracking-tighter flex items-center gap-4">
+            Subscription History
+          </h3>
+          <span className="text-[7px] md:text-[9px] bg-white/5 px-2 py-1 md:px-4 md:py-2 rounded-full text-slate-500 uppercase tracking-widest font-black border border-white/5">
+            Billing
+          </span>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[600px]">
+            <thead>
+              <tr className="border-b border-white/10 text-[8px] md:text-[10px] uppercase tracking-widest text-slate-500 font-black">
+                <th className="pb-4 pl-4">Date</th>
+                <th className="pb-4">Amount</th>
+                <th className="pb-4">Payment Method</th>
+                <th className="pb-4 pr-4 text-right">Status</th>
+              </tr>
+            </thead>
+            <tbody className="text-sm md:text-base text-white">
+              {[
+                { id: 'tx-1', date: '2026-02-28', amount: 1499, method: 'Credit Card (•••• 4242)', status: 'Completed' },
+                { id: 'tx-2', date: '2026-01-28', amount: 1499, method: 'Credit Card (•••• 4242)', status: 'Completed' },
+                { id: 'tx-3', date: '2025-12-28', amount: 1499, method: 'Credit Card (•••• 4242)', status: 'Completed' },
+              ].map((tx) => (
+                <tr key={tx.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
+                  <td className="py-4 pl-4 font-mono text-xs text-slate-300">{tx.date}</td>
+                  <td className="py-4 font-black gold-text">{formatCurrency(tx.amount)}</td>
+                  <td className="py-4 text-xs md:text-sm text-slate-400 flex items-center gap-2">
+                    <Wallet size={14} className="text-slate-500" />
+                    {tx.method}
+                  </td>
+                  <td className="py-4 pr-4 text-right">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-wider border border-green-500/20">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div>
+                      {tx.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

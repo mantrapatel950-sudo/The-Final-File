@@ -44,7 +44,13 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
       <aside className="hidden md:flex fixed left-0 top-0 bottom-0 w-64 bg-slate-950/80 backdrop-blur-3xl text-white flex-col z-40 border-r border-white/5">
         <div className="p-8 mb-4">
           <div className="flex items-center gap-3 group cursor-pointer" onClick={() => setView('dashboard')}>
-             <div className="w-10 h-10 gold-gradient rounded-xl flex items-center justify-center font-black text-slate-950 text-lg shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110">M</div>
+             <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110 overflow-hidden bg-slate-900 border border-yellow-500/30">
+              <img 
+                src="https://picsum.photos/seed/vaultlogo/400/400" 
+                alt="Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>
              <div>
                <h1 className="font-black text-xl tracking-tighter uppercase gold-text leading-none">{t.title}</h1>
                <span className="text-[8px] text-slate-500 font-bold uppercase tracking-widest leading-none">Safe • Secure</span>
@@ -82,7 +88,13 @@ export const Layout: React.FC<LayoutProps> = ({ children, t, currentView, setVie
       {/* Header - Mobile */}
       <header className="md:hidden bg-slate-950/90 backdrop-blur-xl border-b border-white/5 p-4 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 gold-gradient rounded flex items-center justify-center font-black text-slate-950 text-[10px] shadow shadow-yellow-500/20">M</div>
+          <div className="w-6 h-6 rounded flex items-center justify-center shadow shadow-yellow-500/20 overflow-hidden bg-slate-900 border border-yellow-500/30">
+            <img 
+              src="https://picsum.photos/seed/vaultlogo/400/400" 
+              alt="Logo" 
+              className="w-full h-full object-cover"
+            />
+          </div>
           <h1 className="font-black text-white text-base tracking-tighter uppercase gold-text leading-none">{t.title}</h1>
         </div>
       </header>

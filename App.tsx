@@ -57,30 +57,13 @@ const App: React.FC = () => {
   const BrandLogo = ({ className = "w-24 h-24" }: { className?: string }) => (
     <div className={`relative ${className} group`}>
       <div className="absolute inset-0 bg-yellow-500/30 blur-[40px] rounded-full group-hover:bg-yellow-500/50 transition-all duration-1000 animate-pulse"></div>
-      <svg viewBox="0 0 100 100" className="w-full h-full relative z-10 drop-shadow-[0_0_15px_rgba(212,175,55,0.5)] transition-all duration-700 group-hover:scale-110">
-        <defs>
-          <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style={{stopColor: '#f1e5ac', stopOpacity: 1}} />
-            <stop offset="50%" style={{stopColor: '#d4af37', stopOpacity: 1}} />
-            <stop offset="100%" style={{stopColor: '#b8860b', stopOpacity: 1}} />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
-            <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        {/* Outer Hexagon Shield */}
-        <path d="M50 5 L88 27 V73 L50 95 L12 73 V27 Z" fill="none" stroke="url(#logoGold)" strokeWidth="4" filter="url(#glow)" />
-        {/* Inner Shield */}
-        <path d="M50 15 L78 32 V68 L50 85 L22 68 V32 Z" fill="url(#logoGold)" className="opacity-10" />
-        {/* Vault Door Handle / Document Lock */}
-        <circle cx="50" cy="50" r="18" fill="none" stroke="url(#logoGold)" strokeWidth="2" strokeDasharray="4 2" />
-        <rect x="42" y="42" width="16" height="16" rx="2" fill="url(#logoGold)" />
-        <path d="M47 50 L53 50 M50 47 L50 53" stroke="#020617" strokeWidth="2.5" strokeLinecap="round" />
-      </svg>
+      {/* Replace the src below with the URL of your uploaded image */}
+      <img 
+        src="https://picsum.photos/seed/vaultlogo/400/400" 
+        alt="My Final File Logo" 
+        className="w-full h-full relative z-10 object-contain drop-shadow-[0_0_15px_rgba(212,175,55,0.5)] transition-all duration-700 group-hover:scale-110 rounded-full"
+        referrerPolicy="no-referrer"
+      />
     </div>
   );
 

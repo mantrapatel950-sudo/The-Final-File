@@ -27,8 +27,8 @@ const GeminiAssistant: React.FC<GeminiAssistantProps> = ({ t }) => {
     setLoading(true);
 
     try {
-      // Use process.env.API_KEY directly as per @google/genai guidelines
-      const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      // Use process.env.GEMINI_API_KEY directly as per @google/genai guidelines
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: userMsg,

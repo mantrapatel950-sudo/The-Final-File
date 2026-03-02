@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CreditCard, Bitcoin, ShieldCheck, CheckCircle2, ArrowRight, Wallet, Smartphone, Copy } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
 
@@ -16,21 +16,57 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
   const upiId = "mantra69@pthdfc";
   const upiUrl = `upi://pay?pa=${upiId}&pn=MyFinalFile&am=799.00&cu=INR`;
 
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('payment') === 'success') {
+      setIsSuccess(true);
+      // Clean up the URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (urlParams.get('payment') === 'cancel') {
+      // Handle cancellation if needed
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
   const handleCopyUpi = () => {
     navigator.clipboard.writeText(upiId);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!selectedMethod) return;
     setIsProcessing(true);
     
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessing(false);
-      setIsSuccess(true);
-    }, 2000);
+    if (selectedMethod === 'crypto') {
+      // Simulate crypto payment processing
+      setTimeout(() => {
+        setIsProcessing(false);
+        setIsSuccess(true);
+      }, 2000);
+    } else if (selectedMethod === 'upi') {
+      // Use Stripe Checkout for card/UPI payments
+      try {
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        const data = await response.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Failed to initialize payment: ' + (data.error || 'Unknown error'));
+          setIsProcessing(false);
+        }
+      } catch (error) {
+        console.error('Payment error:', error);
+        alert('Failed to initialize payment');
+        setIsProcessing(false);
+      }
+    }
   };
 
   if (isSuccess) {
@@ -125,33 +161,7 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
               
               {selectedMethod === 'upi' && (
                 <div className="p-5 border-t border-yellow-500/20 bg-slate-950/50 flex flex-col items-center justify-center space-y-4">
-                  <div className="bg-white p-4 rounded-xl shadow-xl">
-                    <QRCodeSVG value={upiUrl} size={150} level="H" />
-                  </div>
-                  <p className="text-sm text-slate-400 text-center">Scan with any UPI app to pay ₹799</p>
-                  
-                  <div className="flex items-center gap-2 bg-slate-900 px-4 py-2 rounded-lg border border-white/10 w-full max-w-xs">
-                    <span className="text-slate-300 flex-1 font-mono text-sm truncate">{upiId}</span>
-                    <button 
-                      onClick={handleCopyUpi}
-                      className="text-yellow-500 hover:text-yellow-400 p-1 rounded transition-colors"
-                      title="Copy UPI ID"
-                    >
-                      {copied ? <CheckCircle2 size={16} className="text-green-500" /> : <Copy size={16} />}
-                    </button>
-                  </div>
-                  {copied && <span className="text-xs text-green-500">UPI ID Copied!</span>}
-
-                  <div className="w-full max-w-xs mt-2">
-                    <label className="block text-xs text-slate-400 mb-1">Transaction ID (UTR)</label>
-                    <input 
-                      type="text" 
-                      value={utrNumber}
-                      onChange={(e) => setUtrNumber(e.target.value)}
-                      placeholder="Enter 12-digit UTR number" 
-                      className="w-full bg-slate-900 border border-white/10 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:border-yellow-500"
-                    />
-                  </div>
+                  <p className="text-sm text-slate-400 text-center">You will be redirected to our secure payment gateway to complete your payment.</p>
                 </div>
               )}
             </div>
@@ -184,9 +194,9 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
 
           <button
             onClick={handlePayment}
-            disabled={!selectedMethod || isProcessing || (selectedMethod === 'upi' && utrNumber.length < 12)}
+            disabled={!selectedMethod || isProcessing}
             className={`w-full py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${
-              !selectedMethod || isProcessing || (selectedMethod === 'upi' && utrNumber.length < 12)
+              !selectedMethod || isProcessing
                 ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                 : 'bg-yellow-500 text-slate-900 hover:bg-yellow-400'
             }`}

@@ -69,22 +69,50 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
     e.preventDefault();
     if (isFormValid) {
       setLoading(true);
-      setTimeout(() => {
+      try {
+        const response = await fetch('/api/auth/send-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mobile }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          setOtpSent(true);
+        } else {
+          alert(data.error || 'Failed to send OTP');
+        }
+      } catch (error) {
+        console.error('Error sending OTP:', error);
+        alert('Failed to send OTP');
+      } finally {
         setLoading(false);
-        setOtpSent(true);
-      }, 800);
+      }
     }
   };
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isOtpValid) {
       setLoading(true);
-      setTimeout(() => {
+      try {
+        const response = await fetch('/api/auth/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mobile, otp }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          setSuccess(true);
+          setTimeout(onLogin, 1000);
+        } else {
+          alert(data.error || 'Invalid OTP');
+        }
+      } catch (error) {
+        console.error('Error verifying OTP:', error);
+        alert('Failed to verify OTP');
+      } finally {
         setLoading(false);
-        setSuccess(true);
-        setTimeout(onLogin, 1000);
-      }, 1000);
+      }
     }
   };
 
@@ -131,8 +159,12 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
              <div className="text-white font-black tracking-widest uppercase text-xs">My Final File</div>
              <div className="text-yellow-500 text-[8px] tracking-[0.3em] uppercase">QR Login</div>
            </div>
-           <div className="w-10 h-10 md:w-12 md:h-12 gold-gradient rounded-xl flex items-center justify-center font-black text-slate-950 text-xl shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110">
-             M
+           <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl flex items-center justify-center shadow-lg shadow-yellow-500/20 transition-transform group-hover:scale-110 overflow-hidden bg-slate-900 border border-yellow-500/30">
+             <img 
+               src="https://picsum.photos/seed/vaultlogo/400/400" 
+               alt="Logo" 
+               className="w-full h-full object-cover"
+             />
            </div>
         </button>
       </div>

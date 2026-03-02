@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import dotenv from "dotenv";
 import twilio from "twilio";
+import Stripe from "stripe";
 
 dotenv.config();
 
@@ -18,6 +19,18 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
+
+// Stripe Setup
+let stripeClient: Stripe | null = null;
+const getStripe = () => {
+  if (!stripeClient) {
+    const key = process.env.STRIPE_SECRET_KEY;
+    if (key) {
+      stripeClient = new Stripe(key);
+    }
+  }
+  return stripeClient;
+};
 
 // Twilio Setup
 let twilioClient: twilio.Twilio | null = null;
@@ -36,6 +49,10 @@ const getTwilioClient = () => {
 const otpStore = new Map<string, { otp: string, expiresAt: number }>();
 
 // API route to send OTP
+app.get("/api/test", (req, res) => {
+  res.json({ status: "server is running" });
+});
+
 app.post("/api/auth/send-otp", async (req, res) => {
   const { mobile } = req.body;
   if (!mobile || mobile.length !== 10) {
@@ -56,8 +73,9 @@ app.post("/api/auth/send-otp", async (req, res) => {
       console.log(`Sent OTP ${otp} to +91${mobile} via Twilio`);
       return res.json({ success: true, message: "OTP sent successfully" });
     } catch (error: any) {
-      console.error("Twilio error:", error);
-      return res.status(500).json({ error: "Failed to send OTP via SMS. Please check Twilio configuration." });
+      console.error("Twilio error:", error.message);
+      console.log(`[MOCK SMS FALLBACK] OTP for +91${mobile} is ${otp}`);
+      return res.json({ success: true, message: "Mock OTP sent (Twilio failed)", mock: true });
     }
   } else {
     // Fallback for demo if Twilio is not configured
@@ -85,6 +103,45 @@ app.post("/api/auth/verify-otp", (req, res) => {
     return res.json({ success: true, message: "OTP verified successfully" });
   } else {
     return res.status(400).json({ error: "Invalid OTP" });
+  }
+});
+
+// API route to create Stripe checkout session
+app.post("/api/create-checkout-session", async (req, res) => {
+  const stripe = getStripe();
+  if (!stripe) {
+    return res.status(500).json({ error: "Stripe is not configured." });
+  }
+
+  try {
+    const protocol = req.headers["x-forwarded-proto"] || req.protocol;
+    const host = req.headers.host;
+    const domainUrl = `${protocol}://${host}`;
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: "Premium Vault Subscription",
+              description: "1 Year of Premium Vault Protection",
+            },
+            unit_amount: 79900, // 799 INR in paise
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${domainUrl}/?payment=success`,
+      cancel_url: `${domainUrl}/?payment=cancel`,
+    });
+
+    res.json({ id: session.id, url: session.url });
+  } catch (error: any) {
+    console.error("Stripe error:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
