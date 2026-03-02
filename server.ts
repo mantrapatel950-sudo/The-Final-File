@@ -26,7 +26,12 @@ const getStripe = () => {
   if (!stripeClient) {
     const key = process.env.STRIPE_SECRET_KEY;
     if (key) {
-      stripeClient = new Stripe(key);
+      try {
+        stripeClient = new Stripe(key);
+      } catch (error) {
+        console.error("Failed to initialize Stripe client:", error);
+        return null;
+      }
     }
   }
   return stripeClient;
@@ -39,7 +44,12 @@ const getTwilioClient = () => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     if (accountSid && authToken) {
-      twilioClient = twilio(accountSid, authToken);
+      try {
+        twilioClient = twilio(accountSid, authToken);
+      } catch (error) {
+        console.error("Failed to initialize Twilio client:", error);
+        return null;
+      }
     }
   }
   return twilioClient;

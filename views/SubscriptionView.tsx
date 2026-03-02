@@ -167,29 +167,47 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
             </div>
 
             {/* Crypto */}
-            <button
-              onClick={() => setSelectedMethod('crypto')}
-              className={`w-full flex items-center justify-between p-5 rounded-xl border transition-all ${
-                selectedMethod === 'crypto' 
-                  ? 'bg-yellow-500/10 border-yellow-500' 
-                  : 'bg-slate-900 border-white/5 hover:border-white/20'
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
-                  <Bitcoin className="w-6 h-6 text-orange-500" />
+            <div className={`w-full rounded-xl border transition-all overflow-hidden ${
+              selectedMethod === 'crypto' 
+                ? 'bg-yellow-500/5 border-yellow-500' 
+                : 'bg-slate-900 border-white/5 hover:border-white/20'
+            }`}>
+              <button
+                onClick={() => setSelectedMethod('crypto')}
+                className="w-full flex items-center justify-between p-5"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                    <Bitcoin className="w-6 h-6 text-orange-500" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-bold text-white">Cryptocurrency</div>
+                    <div className="text-sm text-slate-400">Bitcoin, USDT, Solana, etc.</div>
+                  </div>
                 </div>
-                <div className="text-left">
-                  <div className="font-bold text-white">Cryptocurrency</div>
-                  <div className="text-sm text-slate-400">Bitcoin, USDT, Solana, etc.</div>
+                <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                  selectedMethod === 'crypto' ? 'border-yellow-500' : 'border-slate-600'
+                }`}>
+                  {selectedMethod === 'crypto' && <div className="w-3 h-3 bg-yellow-500 rounded-full" />}
                 </div>
-              </div>
-              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                selectedMethod === 'crypto' ? 'border-yellow-500' : 'border-slate-600'
-              }`}>
-                {selectedMethod === 'crypto' && <div className="w-3 h-3 bg-yellow-500 rounded-full" />}
-              </div>
-            </button>
+              </button>
+              
+              {selectedMethod === 'crypto' && (
+                <div className="p-5 border-t border-yellow-500/20 bg-slate-950/50 flex flex-col items-center justify-center space-y-4">
+                  <button 
+                    onClick={() => {
+                      // Mock connect wallet
+                      alert("Connecting to Crypto Wallet...");
+                    }}
+                    className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-colors border border-white/10"
+                  >
+                    <Wallet className="w-5 h-5" />
+                    Connect Wallet
+                  </button>
+                  <p className="text-sm text-slate-400 text-center">Connect your Web3 wallet to pay securely.</p>
+                </div>
+              )}
+            </div>
           </div>
 
           <button
