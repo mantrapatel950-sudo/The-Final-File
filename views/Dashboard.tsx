@@ -42,77 +42,77 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
   const COLORS = ['#d4af37', '#6366f1', '#10b981', '#ef4444', '#f59e0b', '#06b6d4'];
 
   return (
-    <div className="space-y-12 stagger-in">
+    <div className="space-y-6 stagger-in">
       {/* Header Status Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-8">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-green-400 bg-green-500/10 w-fit px-3 py-1 md:px-4 md:py-1.5 rounded-full text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] border border-green-500/20 shadow-lg shadow-green-500/5">
-            <Lock size={10} strokeWidth={3} className="animate-pulse md:w-3 md:h-3" /> {lang === 'hi' ? 'वॉल्ट सुरक्षित' : 'VAULT SECURED'}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="flex items-center gap-1.5 text-green-400 bg-green-500/10 w-fit px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border border-green-500/20">
+            <Lock size={12} className="animate-pulse" /> {lang === 'hi' ? 'वॉल्ट सुरक्षित' : 'VAULT SECURED'}
           </div>
-          <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
+          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
             {t.dashboard}
           </h2>
         </div>
-        <div className="flex items-center gap-4 md:gap-6 w-full md:w-auto">
+        <div className="flex items-center gap-3 w-full md:w-auto">
           <button 
             onClick={() => setView('assets')}
-            className="w-full md:w-auto group gold-gradient text-slate-950 px-6 py-3 md:px-8 md:py-4 rounded-[1.5rem] md:rounded-[2rem] font-black text-xs md:text-sm hover:scale-[1.05] active:scale-95 transition-all shadow-2xl shadow-yellow-500/30 flex items-center justify-center gap-2 md:gap-4 hover-glow"
+            className="w-full md:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2"
           >
-            {t.addAsset} <TrendingUp size={18} strokeWidth={3} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform md:w-5 md:h-5" />
+            {t.addAsset} <TrendingUp size={16} />
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Wealth & Protection Combined Highlight */}
-        <div className="md:col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 bg-slate-900/40 backdrop-blur-2xl rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-8 border border-white/5 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 p-8 md:p-12 opacity-5 pointer-events-none group-hover:scale-110 transition-transform duration-1000">
-            <ShieldCheck size={200} className="text-white md:w-[300px] md:h-[300px]" />
+        <div className="md:col-span-12 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900/60 backdrop-blur-xl rounded-xl p-5 border border-white/10 relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-5 pointer-events-none">
+            <ShieldCheck size={120} className="text-white" />
           </div>
           
-          <div className="space-y-8 md:space-y-12 relative z-10">
+          <div className="space-y-6 relative z-10">
             <div>
-              <h3 className="text-slate-500 font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] mb-2 md:mb-4 flex items-center gap-2">
-                <Sparkles size={12} className="text-yellow-500 md:w-3.5 md:h-3.5" /> {t.totalWealth}
+              <h3 className="text-slate-400 font-semibold text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <Sparkles size={14} className="text-yellow-500" /> {t.totalWealth}
               </h3>
-              <p className="text-2xl md:text-5xl font-black gold-text leading-none mb-4 md:mb-6 break-words">
+              <p className="text-3xl font-bold text-white leading-none mb-3 truncate">
                 {formatCurrency(totalValuation)}
               </p>
-              <div className="flex flex-wrap items-center gap-2 md:gap-3">
-                <span className="bg-white/10 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl text-[8px] md:text-[10px] font-black uppercase tracking-widest border border-white/10">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="bg-white/10 text-white px-2.5 py-1 rounded-md text-[10px] font-semibold uppercase tracking-wider border border-white/10">
                   {assets.length} {lang === 'hi' ? 'संपत्तियां' : 'Assets Linked'}
                 </span>
-                <span className="text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-widest bg-slate-950/50 px-3 py-1.5 md:px-4 md:py-2 rounded-lg md:rounded-xl border border-white/5">AES-256 Encrypted</span>
+                <span className="text-slate-400 text-[10px] font-semibold uppercase tracking-wider bg-black/20 px-2.5 py-1 rounded-md border border-white/5">AES-256 Encrypted</span>
               </div>
             </div>
 
-            <div className="flex gap-3 md:gap-4">
+            <div className="flex gap-2">
               <button 
                 onClick={() => setView('assets')}
-                className="flex-1 bg-white/5 hover:bg-white/10 text-white py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[8px] md:text-[10px] uppercase tracking-widest transition-all border border-white/5"
+                className="flex-1 bg-white/5 hover:bg-white/10 text-white py-2 rounded-lg font-medium text-xs uppercase tracking-wider transition-colors border border-white/10"
               >
                 Portfolio
               </button>
               <button 
                 onClick={() => setView('kit')}
-                className="flex-1 gold-gradient text-slate-950 py-3 md:py-4 rounded-xl md:rounded-2xl font-black text-[8px] md:text-[10px] uppercase tracking-widest transition-all shadow-lg shadow-yellow-500/20"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium text-xs uppercase tracking-wider transition-colors shadow-sm"
               >
                 Legal Kit
               </button>
             </div>
           </div>
 
-          <div className="bg-slate-950/40 backdrop-blur-md rounded-[1.5rem] md:rounded-[2.5rem] p-4 md:p-8 border border-white/5 flex flex-col items-center justify-center text-center relative z-10 shadow-inner">
-            <h3 className="text-white font-black text-xs md:text-sm uppercase tracking-widest mb-4 md:mb-8">{t.vaultProtection}</h3>
-            <div className="relative w-24 h-24 md:w-40 md:h-40 mb-4 md:mb-8 group/pie">
+          <div className="bg-black/20 rounded-xl p-5 border border-white/5 flex flex-col items-center justify-center text-center relative z-10">
+            <h3 className="text-white font-semibold text-xs uppercase tracking-wider mb-4">{t.vaultProtection}</h3>
+            <div className="relative w-24 h-24 mb-4">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={scoreData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={window.innerWidth < 768 ? 35 : 60}
-                    outerRadius={window.innerWidth < 768 ? 45 : 75}
+                    innerRadius={35}
+                    outerRadius={45}
                     startAngle={90}
                     endAngle={450}
                     dataKey="value"
@@ -123,13 +123,12 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
-              <div className="absolute inset-0 flex flex-col items-center justify-center transition-transform duration-500 group-hover/pie:scale-110">
-                <span className="text-2xl md:text-4xl font-black text-white tracking-tighter">{totalScore}%</span>
-                <span className="text-[7px] md:text-[9px] font-black text-slate-500 uppercase tracking-[0.2em] mt-1">Status</span>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <span className="text-xl font-bold text-white">{totalScore}%</span>
               </div>
             </div>
-            <div className="px-3 md:px-6 py-1.5 md:py-2 bg-white/5 rounded-full border border-white/5">
-               <p className="text-slate-400 text-[7px] md:text-[9px] font-black uppercase tracking-widest">
+            <div className="px-3 py-1 bg-white/5 rounded-md border border-white/10">
+               <p className="text-slate-300 text-[10px] font-semibold uppercase tracking-wider">
                 {totalScore > 80 ? '🔒 Ultimate Shield' : '⚠️ Action Required'}
               </p>
             </div>
@@ -137,75 +136,66 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
         </div>
 
         {/* Action List Sidebar */}
-        <div className="md:col-span-12 lg:col-span-4 space-y-4 md:space-y-6">
-          <div onClick={() => setView('subscription')} className="cursor-pointer group glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden border border-yellow-500/20 bg-yellow-500/5">
-            <div className="absolute top-0 right-0 p-6 md:p-8 opacity-10 group-hover:scale-125 transition-transform duration-700 text-yellow-500">
-              <Award size={60} className="md:w-[80px] md:h-[80px]" />
+        <div className="md:col-span-12 lg:col-span-4 space-y-4">
+          <div onClick={() => setView('subscription')} className="cursor-pointer bg-yellow-500/10 hover:bg-yellow-500/20 p-4 rounded-xl relative overflow-hidden border border-yellow-500/20 transition-colors">
+            <div className="absolute top-0 right-0 p-4 opacity-10 text-yellow-500">
+              <Award size={40} />
             </div>
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-yellow-500/20 text-yellow-500 rounded-2xl md:rounded-3xl border border-yellow-500/30 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-yellow-500 group-hover:text-slate-900 transition-all duration-500 shadow-lg">
-              <Award size={24} className="md:w-8 md:h-8" />
+            <div className="w-10 h-10 bg-yellow-500/20 text-yellow-500 rounded-lg flex items-center justify-center mb-3">
+              <Award size={20} />
             </div>
-            <h3 className="text-yellow-500/80 font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] mb-1 md:mb-2">Premium Plan</h3>
-            <p className="text-xl md:text-2xl font-black text-white leading-none tracking-tight">Upgrade Now</p>
-            <div className="mt-4 md:mt-8 flex items-center text-yellow-500 font-black text-[8px] md:text-[10px] uppercase tracking-widest gap-2 group-hover:translate-x-2 transition-transform">
-              View Benefits <ChevronRight size={14} />
-            </div>
+            <h3 className="text-yellow-500/80 font-semibold text-[10px] uppercase tracking-wider mb-1">Premium Plan</h3>
+            <p className="text-lg font-bold text-white leading-none">Upgrade Now</p>
           </div>
 
-          <div onClick={() => setView('nominees')} className="cursor-pointer group glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-6 md:p-8 opacity-5 group-hover:scale-125 transition-transform duration-700">
-              <Users size={60} className="md:w-[80px] md:h-[80px]" />
+          <div onClick={() => setView('nominees')} className="cursor-pointer bg-slate-900/50 hover:bg-slate-800 p-4 rounded-xl relative overflow-hidden border border-white/10 transition-colors">
+            <div className="absolute top-0 right-0 p-4 opacity-5">
+              <Users size={40} />
             </div>
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-indigo-500/10 text-indigo-400 rounded-2xl md:rounded-3xl border border-indigo-500/20 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500 shadow-lg">
-              <Users size={24} className="md:w-8 md:h-8" />
+            <div className="w-10 h-10 bg-indigo-500/20 text-indigo-400 rounded-lg flex items-center justify-center mb-3">
+              <Users size={20} />
             </div>
-            <h3 className="text-slate-500 font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] mb-1 md:mb-2">{t.myNominees}</h3>
-            <p className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">{nominees.length}</p>
-            <div className="mt-4 md:mt-8 flex items-center text-indigo-400 font-black text-[8px] md:text-[10px] uppercase tracking-widest gap-2 group-hover:translate-x-2 transition-transform">
-              {t.myNominees} <ChevronRight size={14} />
-            </div>
+            <h3 className="text-slate-400 font-semibold text-[10px] uppercase tracking-wider mb-1">{t.myNominees}</h3>
+            <p className="text-2xl font-bold text-white leading-none">{nominees.length}</p>
           </div>
 
-          <div onClick={() => setView('emergency')} className="cursor-pointer group glass-card p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-6 md:p-8 opacity-5 group-hover:scale-125 transition-transform duration-700 text-red-500">
-              <Activity size={60} className="md:w-[80px] md:h-[80px]" />
+          <div onClick={() => setView('emergency')} className="cursor-pointer bg-slate-900/50 hover:bg-slate-800 p-4 rounded-xl relative overflow-hidden border border-white/10 transition-colors">
+             <div className="absolute top-0 right-0 p-4 opacity-5 text-red-500">
+              <Activity size={40} />
             </div>
-            <div className="w-12 h-12 md:w-16 md:h-16 bg-red-500/10 text-red-400 rounded-2xl md:rounded-3xl border border-red-500/20 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-red-600 group-hover:text-white transition-all duration-500 shadow-lg">
-              <Activity size={24} className="md:w-8 md:h-8" />
+            <div className="w-10 h-10 bg-red-500/20 text-red-400 rounded-lg flex items-center justify-center mb-3">
+              <Activity size={20} />
             </div>
-            <h3 className="text-slate-500 font-black text-[8px] md:text-[10px] uppercase tracking-[0.3em] mb-1 md:mb-2">Succession Protocol</h3>
-            <p className="text-xl md:text-2xl font-black text-white leading-none tracking-tight">Active Trigger</p>
-            <div className="mt-4 md:mt-8 flex items-center text-red-400 font-black text-[8px] md:text-[10px] uppercase tracking-widest gap-2 group-hover:translate-x-2 transition-transform">
-              Review Protocols <ChevronRight size={14} />
-            </div>
+            <h3 className="text-slate-400 font-semibold text-[10px] uppercase tracking-wider mb-1">Succession Protocol</h3>
+            <p className="text-lg font-bold text-white leading-none">Active Trigger</p>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-        <div className="glass-card p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col min-h-[250px] md:min-h-[400px] border border-white/5">
-          <div className="flex items-center justify-between mb-6 md:mb-8">
-            <h3 className="font-black text-xl md:text-3xl text-white tracking-tighter flex items-center gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="bg-slate-900/50 p-5 rounded-xl flex flex-col min-h-[300px] border border-white/10">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-lg text-white">
               Asset Map
             </h3>
-            <span className="text-[7px] md:text-[9px] bg-white/5 px-2 py-1 md:px-4 md:py-2 rounded-full text-slate-500 uppercase tracking-widest font-black border border-white/5">
+            <span className="text-[10px] bg-white/10 px-2.5 py-1 rounded-md text-slate-300 uppercase tracking-wider font-medium">
               Portfolio View
             </span>
           </div>
           
           <div className="flex-1">
             {data.length > 0 ? (
-              <ResponsiveContainer width="100%" height={window.innerWidth < 768 ? 200 : 300}>
-                <BarChart data={data} layout="vertical" margin={{ left: window.innerWidth < 768 ? 0 : 20 }}>
+              <ResponsiveContainer width="100%" height={220}>
+                <BarChart data={data} layout="vertical" margin={{ left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="rgba(255,255,255,0.05)" />
                   <XAxis type="number" hide />
-                  <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: window.innerWidth < 768 ? 8 : 10, fontWeight: 900, fill: '#64748b' }} width={window.innerWidth < 768 ? 70 : 110} />
+                  <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#94a3b8' }} width={80} />
                   <Tooltip 
-                    cursor={{fill: 'rgba(255,255,255,0.02)'}}
-                    contentStyle={{ background: '#0f172a', borderRadius: '1rem', border: '1px solid rgba(255,255,255,0.1)', padding: '10px' }}
+                    cursor={{fill: 'rgba(255,255,255,0.05)'}}
+                    contentStyle={{ background: '#1e293b', borderRadius: '0.5rem', border: '1px solid rgba(255,255,255,0.1)', padding: '8px', fontSize: '12px' }}
                     formatter={(value: number) => [formatCurrency(value), 'Value']}
                   />
-                  <Bar dataKey="value" radius={[0, 10, 10, 0]} barSize={window.innerWidth < 768 ? 16 : 24}>
+                  <Bar dataKey="value" radius={[0, 4, 4, 0]} barSize={16}>
                     {data.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
@@ -213,9 +203,9 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-700 gap-4 md:gap-6 opacity-30">
-                <div className="w-16 h-16 md:w-24 md:h-24 bg-white/5 rounded-2xl md:rounded-[2.5rem] flex items-center justify-center text-3xl md:text-5xl shadow-inner border border-white/5">📊</div>
-                <p className="font-black uppercase tracking-[0.3em] text-[8px] md:text-[10px]">Data Stream Empty</p>
+              <div className="h-full flex flex-col items-center justify-center text-slate-500 gap-3">
+                <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-2xl border border-white/10">📊</div>
+                <p className="font-medium text-xs">No data available</p>
               </div>
             )}
           </div>
@@ -225,42 +215,42 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
       </div>
 
       {/* Recent Transactions */}
-      <div className="glass-card p-4 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/5">
-        <div className="flex items-center justify-between mb-6 md:mb-8">
-          <h3 className="font-black text-xl md:text-3xl text-white tracking-tighter flex items-center gap-4">
+      <div className="bg-slate-900/50 p-5 rounded-xl border border-white/10">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-lg text-white">
             Subscription History
           </h3>
-          <span className="text-[7px] md:text-[9px] bg-white/5 px-2 py-1 md:px-4 md:py-2 rounded-full text-slate-500 uppercase tracking-widest font-black border border-white/5">
+          <span className="text-[10px] bg-white/10 px-2.5 py-1 rounded-md text-slate-300 uppercase tracking-wider font-medium">
             Billing
           </span>
         </div>
         
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-left border-collapse min-w-[500px]">
             <thead>
-              <tr className="border-b border-white/10 text-[8px] md:text-[10px] uppercase tracking-widest text-slate-500 font-black">
-                <th className="pb-4 pl-4">Date</th>
-                <th className="pb-4">Amount</th>
-                <th className="pb-4">Payment Method</th>
-                <th className="pb-4 pr-4 text-right">Status</th>
+              <tr className="border-b border-white/10 text-[10px] uppercase tracking-wider text-slate-400 font-medium">
+                <th className="pb-3 pl-2">Date</th>
+                <th className="pb-3">Amount</th>
+                <th className="pb-3">Payment Method</th>
+                <th className="pb-3 pr-2 text-right">Status</th>
               </tr>
             </thead>
-            <tbody className="text-sm md:text-base text-white">
+            <tbody className="text-sm text-white">
               {[
                 { id: 'tx-1', date: '2026-02-28', amount: 1499, method: 'Credit Card (•••• 4242)', status: 'Completed' },
                 { id: 'tx-2', date: '2026-01-28', amount: 1499, method: 'Credit Card (•••• 4242)', status: 'Completed' },
                 { id: 'tx-3', date: '2025-12-28', amount: 1499, method: 'Credit Card (•••• 4242)', status: 'Completed' },
               ].map((tx) => (
-                <tr key={tx.id} className="border-b border-white/5 hover:bg-white/5 transition-colors group">
-                  <td className="py-4 pl-4 font-mono text-xs text-slate-300">{tx.date}</td>
-                  <td className="py-4 font-black gold-text">{formatCurrency(tx.amount)}</td>
-                  <td className="py-4 text-xs md:text-sm text-slate-400 flex items-center gap-2">
+                <tr key={tx.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                  <td className="py-3 pl-2 font-mono text-xs text-slate-300">{tx.date}</td>
+                  <td className="py-3 font-medium text-white">{formatCurrency(tx.amount)}</td>
+                  <td className="py-3 text-xs text-slate-400 flex items-center gap-2">
                     <Wallet size={14} className="text-slate-500" />
                     {tx.method}
                   </td>
-                  <td className="py-4 pr-4 text-right">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-wider border border-green-500/20">
-                      <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div>
+                  <td className="py-3 pr-2 text-right">
+                    <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded bg-green-500/10 text-green-400 text-[10px] font-medium uppercase tracking-wider border border-green-500/20">
+                      <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
                       {tx.status}
                     </span>
                   </td>

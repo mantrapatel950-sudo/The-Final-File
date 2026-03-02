@@ -78,6 +78,10 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
         const data = await response.json();
         if (data.success) {
           setOtpSent(true);
+          if (data.mock && data.otp) {
+            alert(`[DEMO MODE] Your OTP is: ${data.otp}\n\n(In a production app with Twilio configured, this would be sent via SMS)`);
+            setOtp(data.otp);
+          }
         } else {
           alert(data.error || 'Failed to send OTP');
         }

@@ -81,26 +81,26 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
   };
 
   return (
-    <div className="space-y-12 stagger-in">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-8">
-        <div className="space-y-2">
-          <div className="h-px w-16 md:w-20 bg-indigo-500/30 mb-4"></div>
-          <h2 className="text-4xl md:text-7xl font-black text-white tracking-tighter uppercase leading-none">{t.myNominees}</h2>
-          <p className="text-slate-500 font-black uppercase text-[8px] md:text-[10px] tracking-[0.4em]">Authorized Nominee Vault</p>
+    <div className="space-y-6 stagger-in">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="space-y-1">
+          <div className="h-px w-12 bg-indigo-500/30 mb-2"></div>
+          <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">{t.myNominees}</h2>
+          <p className="text-slate-400 font-medium text-[10px] uppercase tracking-wider">Authorized Nominee Vault</p>
         </div>
         {!isAdding && (
-          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
             <button 
               onClick={() => setShowSebiLaws(true)}
-              className="w-full md:w-auto group bg-slate-800 text-white px-8 py-4 md:px-10 md:py-5 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm flex items-center justify-center gap-4 hover:bg-slate-700 transition-all border border-white/10 active:scale-95"
+              className="w-full md:w-auto bg-slate-800 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center justify-center gap-2 hover:bg-slate-700 transition-colors border border-white/10"
             >
-              <BookOpen size={20} strokeWidth={4} /> SEBI Guidelines
+              <BookOpen size={16} /> SEBI Guidelines
             </button>
             <button 
               onClick={() => setIsAdding(true)}
-              className="w-full md:w-auto group bg-indigo-600 text-white px-8 py-4 md:px-10 md:py-5 rounded-[2rem] md:rounded-[2.5rem] font-black text-sm flex items-center justify-center gap-4 hover:scale-105 transition-all shadow-2xl shadow-indigo-500/20 active:scale-95"
+              className="w-full md:w-auto bg-indigo-600 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center justify-center gap-2 hover:bg-indigo-700 transition-colors shadow-sm"
             >
-              <Plus size={20} strokeWidth={4} /> {t.addNominee}
+              <Plus size={16} /> {t.addNominee}
             </button>
           </div>
         )}
@@ -108,65 +108,65 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
 
       {showSebiLaws && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="bg-slate-900 border border-white/10 rounded-[2rem] w-full max-w-3xl max-h-[80vh] overflow-hidden flex flex-col shadow-2xl animate-in zoom-in duration-300">
-            <div className="p-6 md:p-8 border-b border-white/10 flex items-center justify-between bg-slate-800/50">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center">
-                  <BookOpen size={24} />
+          <div className="bg-slate-900 border border-white/10 rounded-xl w-full max-w-2xl max-h-[80vh] overflow-hidden flex flex-col shadow-2xl animate-in zoom-in duration-200">
+            <div className="p-4 md:p-5 border-b border-white/10 flex items-center justify-between bg-slate-800/50">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-indigo-500/20 text-indigo-400 rounded-lg flex items-center justify-center">
+                  <BookOpen size={20} />
                 </div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-black text-white uppercase tracking-tight">SEBI Nominee Laws</h3>
-                  <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Securities and Exchange Board of India</p>
+                  <h3 className="text-lg font-bold text-white tracking-tight">SEBI Nominee Laws</h3>
+                  <p className="text-slate-400 text-[10px] font-medium uppercase tracking-wider">Securities and Exchange Board of India</p>
                 </div>
               </div>
               <button 
                 onClick={() => setShowSebiLaws(false)}
-                className="p-3 bg-white/5 hover:bg-white/10 rounded-full text-slate-400 hover:text-white transition-colors"
+                className="p-2 bg-white/5 hover:bg-white/10 rounded-md text-slate-400 hover:text-white transition-colors"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
             
-            <div className="p-6 md:p-8 overflow-y-auto space-y-6 text-slate-300 text-sm md:text-base leading-relaxed">
-              <div className="space-y-4">
-                <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                  <ShieldCheck size={18} className="text-indigo-400" /> 1. Mandatory Nomination
+            <div className="p-5 md:p-6 overflow-y-auto space-y-5 text-slate-300 text-sm leading-relaxed">
+              <div className="space-y-2">
+                <h4 className="text-white font-semibold text-base flex items-center gap-2">
+                  <ShieldCheck size={16} className="text-indigo-400" /> 1. Mandatory Nomination
                 </h4>
                 <p className="pl-6 text-slate-400">
                   SEBI has made it mandatory for all eligible trading and demat account holders to either provide a nomination or explicitly opt out of nomination through a formal declaration. Failure to do so will result in the freezing of the accounts for trading and demat operations.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                  <UserCheck size={18} className="text-indigo-400" /> 2. Multiple Nominees
+              <div className="space-y-2">
+                <h4 className="text-white font-semibold text-base flex items-center gap-2">
+                  <UserCheck size={16} className="text-indigo-400" /> 2. Multiple Nominees
                 </h4>
                 <p className="pl-6 text-slate-400">
                   An investor can nominate up to three individuals for their demat and trading accounts. The investor must specify the percentage of share for each nominee, and the total must add up to exactly 100%. If no percentage is specified, the assets will be distributed equally among all surviving nominees.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                  <Building size={18} className="text-indigo-400" /> 3. Who Can Be a Nominee?
+              <div className="space-y-2">
+                <h4 className="text-white font-semibold text-base flex items-center gap-2">
+                  <Building size={16} className="text-indigo-400" /> 3. Who Can Be a Nominee?
                 </h4>
                 <p className="pl-6 text-slate-400">
                   A nominee can be any individual, including a minor. If a minor is nominated, the details of the guardian must be provided. Non-individuals such as a society, trust, body corporate, partnership firm, or Hindu Undivided Family (HUF) cannot be appointed as a nominee.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                  <KeyRound size={18} className="text-indigo-400" /> 4. Rights of the Nominee
+              <div className="space-y-2">
+                <h4 className="text-white font-semibold text-base flex items-center gap-2">
+                  <KeyRound size={16} className="text-indigo-400" /> 4. Rights of the Nominee
                 </h4>
                 <p className="pl-6 text-slate-400">
                   The nominee holds the assets in a fiduciary capacity (as a trustee) for the legal heirs of the deceased. The nomination does not override the laws of succession or a valid will. The nominee's primary role is to receive the assets from the depository/broker and hold them until the legal heirs claim them.
                 </p>
               </div>
 
-              <div className="space-y-4">
-                <h4 className="text-white font-bold text-lg flex items-center gap-2">
-                  <ExternalLink size={18} className="text-indigo-400" /> 5. Modification & Cancellation
+              <div className="space-y-2">
+                <h4 className="text-white font-semibold text-base flex items-center gap-2">
+                  <ExternalLink size={16} className="text-indigo-400" /> 5. Modification & Cancellation
                 </h4>
                 <p className="pl-6 text-slate-400">
                   Nominations can be changed or cancelled at any time by the account holder. The latest nomination form submitted and registered with the Depository Participant (DP) or broker will supersede all previous nominations.
@@ -174,10 +174,10 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
               </div>
             </div>
             
-            <div className="p-6 border-t border-white/10 bg-slate-900/80 flex justify-end">
+            <div className="p-4 md:p-5 border-t border-white/10 bg-slate-900/80 flex justify-end">
               <button 
                 onClick={() => setShowSebiLaws(false)}
-                className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl hover:bg-indigo-700 transition-colors"
+                className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors text-sm"
               >
                 Understood
               </button>
@@ -187,52 +187,52 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
       )}
 
       {isAdding && (
-        <div className="bg-slate-900/40 backdrop-blur-3xl p-6 md:p-14 rounded-[2rem] md:rounded-[4rem] shadow-2xl border border-white/10 animate-reveal relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-1.5 bg-indigo-500/30">
+        <div className="bg-slate-900/60 backdrop-blur-xl p-5 md:p-8 rounded-xl shadow-lg border border-white/10 animate-reveal relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500/30">
             <div className="h-full bg-indigo-500 animate-pulse w-full"></div>
           </div>
           
-          <div className="flex justify-between items-start mb-10 md:mb-16">
+          <div className="flex justify-between items-start mb-6 md:mb-8">
             <div>
-              <h3 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter mb-2 md:mb-4">{t.addNominee}</h3>
-              <div className="flex items-center gap-2 md:gap-3 text-slate-500 text-[8px] md:text-[10px] font-black uppercase tracking-[0.4em]">
-                <div className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></div>
+              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight mb-1">{t.addNominee}</h3>
+              <div className="flex items-center gap-2 text-slate-400 text-[10px] font-medium uppercase tracking-wider">
+                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></div>
                 KYC Verification Required
               </div>
             </div>
-            <button onClick={() => { setIsAdding(false); resetForm(); }} className="bg-white/5 p-3 md:p-4 rounded-full text-slate-500 hover:text-white transition-all hover:bg-white/10 border border-white/5">
-              <X size={20} className="md:w-6 md:h-6" />
+            <button onClick={() => { setIsAdding(false); resetForm(); }} className="bg-white/5 p-2 rounded-md text-slate-400 hover:text-white transition-colors hover:bg-white/10 border border-white/5">
+              <X size={18} />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            <div className="space-y-3 md:space-y-4">
-              <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] ml-2">Legal Full Name</label>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <div className="space-y-2">
+              <label className="block text-[10px] font-medium text-slate-400 uppercase tracking-wider ml-1">Legal Full Name</label>
               <div className="relative group">
                 <input 
                   type="text"
                   value={newNominee.name || ''}
                   onChange={e => setNewNominee({...newNominee, name: e.target.value})}
                   placeholder="As per Government ID"
-                  className="w-full pl-12 md:pl-16 pr-6 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-bold text-white text-base md:text-lg shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-black/20 border border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium text-white text-sm shadow-inner"
                 />
-                <User className="absolute left-5 md:left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-500 w-5 h-5 md:w-6 md:h-6" />
+                <User className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 w-4 h-4" />
               </div>
             </div>
 
-            <div className="space-y-3 md:space-y-4">
-              <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] ml-2">Relation</label>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-medium text-slate-400 uppercase tracking-wider ml-1">Relation</label>
               <input 
                 type="text"
                 value={newNominee.relation || ''}
                 onChange={e => setNewNominee({...newNominee, relation: e.target.value})}
                 placeholder="e.g. Spouse, Child, Parent"
-                className="w-full px-6 md:px-8 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-bold text-white text-base md:text-lg shadow-inner"
+                className="w-full px-4 py-3 bg-black/20 border border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium text-white text-sm shadow-inner"
               />
             </div>
 
-            <div className="space-y-3 md:space-y-4">
-              <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] ml-2">{t.sharePercentage}</label>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-medium text-slate-400 uppercase tracking-wider ml-1">{t.sharePercentage}</label>
               <div className="relative group">
                 <input 
                   type="number"
@@ -241,55 +241,55 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
                   value={newNominee.sharePercentage || ''}
                   onChange={e => setNewNominee({...newNominee, sharePercentage: Number(e.target.value)})}
                   placeholder="0-100"
-                  className="w-full pl-12 md:pl-16 pr-6 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-black text-white text-base md:text-xl shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-black/20 border border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-medium text-white text-sm shadow-inner"
                 />
-                <Shield className="absolute left-5 md:left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-500 w-5 h-5 md:w-6 md:h-6" />
+                <Shield className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 w-4 h-4" />
               </div>
             </div>
 
-            <div className="space-y-3 md:space-y-4">
-              <label className="block text-[8px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] ml-2">Mobile Number</label>
+            <div className="space-y-2">
+              <label className="block text-[10px] font-medium text-slate-400 uppercase tracking-wider ml-1">Mobile Number</label>
               <div className="relative group">
                 <input 
                   type="tel"
                   value={newNominee.mobile || ''}
                   onChange={e => setNewNominee({...newNominee, mobile: e.target.value.replace(/\D/g, '').slice(0, 10)})}
                   placeholder="10-digit primary"
-                  className="w-full pl-12 md:pl-16 pr-6 py-5 md:py-7 bg-white/5 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] outline-none focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all font-mono font-black text-white text-base md:text-xl tracking-widest shadow-inner"
+                  className="w-full pl-10 pr-4 py-3 bg-black/20 border border-white/10 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500 transition-all font-mono font-medium text-white text-sm tracking-widest shadow-inner"
                 />
-                <Smartphone className="absolute left-5 md:left-7 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-500 w-5 h-5 md:w-6 md:h-6" />
+                <Smartphone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 w-4 h-4" />
               </div>
             </div>
 
-            <div className="md:col-span-2 space-y-6 md:space-y-8 pt-6 md:pt-8">
-               <div className="flex items-center gap-2 md:gap-4">
-                  <div className="h-px flex-1 bg-white/5"></div>
-                  <span className="text-[7px] md:text-[9px] font-black text-slate-600 uppercase tracking-[0.4em] md:tracking-[0.6em]">Biometric Verification</span>
-                  <div className="h-px flex-1 bg-white/5"></div>
+            <div className="md:col-span-2 space-y-4 pt-4">
+               <div className="flex items-center gap-3">
+                  <div className="h-px flex-1 bg-white/10"></div>
+                  <span className="text-[10px] font-medium text-slate-500 uppercase tracking-wider">Biometric Verification</span>
+                  <div className="h-px flex-1 bg-white/10"></div>
                </div>
                
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                  <div className={`p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem] border-2 transition-all duration-500 ${newNominee.verified && verificationMode === 'manual' ? 'border-indigo-500 bg-indigo-500/5' : 'border-white/5 bg-white/5'}`}>
-                    <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
-                        <Fingerprint size={20} className="md:w-6 md:h-6" />
+               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div className={`p-5 rounded-xl border transition-all duration-300 ${newNominee.verified && verificationMode === 'manual' ? 'border-indigo-500 bg-indigo-500/5' : 'border-white/10 bg-black/20'}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+                        <Fingerprint size={16} />
                       </div>
-                      <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Manual Aadhar Entry</span>
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Manual Aadhar Entry</span>
                     </div>
 
                     {!showOtpInput && !newNominee.verified && (
-                      <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="flex flex-col sm:flex-row gap-3">
                         <input 
                           type="text"
                           value={newNominee.aadharNo || ''}
                           onChange={e => setNewNominee({...newNominee, aadharNo: e.target.value.replace(/\D/g, '').slice(0, 12)})}
                           placeholder="Aadhar Number"
-                          className="flex-1 px-4 md:px-6 py-4 md:py-5 bg-black/40 border border-white/10 rounded-xl md:rounded-2xl outline-none font-mono font-black text-white tracking-widest text-sm md:text-base"
+                          className="flex-1 px-4 py-2.5 bg-black/40 border border-white/10 rounded-lg outline-none font-mono font-medium text-white tracking-widest text-sm"
                         />
                         <button 
                           onClick={startAadharVerification}
                           disabled={verifying || newNominee.aadharNo?.length !== 12}
-                          className="px-6 md:px-8 py-4 md:py-0 bg-indigo-600 text-white rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-widest hover:bg-indigo-500 disabled:opacity-20 transition-all flex items-center justify-center"
+                          className="px-4 py-2.5 bg-indigo-600 text-white rounded-lg text-xs font-medium hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center"
                         >
                           {verifying ? <Loader2 className="animate-spin" size={16} /> : t.verifyAadhar}
                         </button>
@@ -297,20 +297,20 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
                     )}
 
                     {showOtpInput && (
-                      <div className="animate-in slide-in-from-top-4 duration-500">
-                        <p className="text-[8px] md:text-[10px] font-black text-indigo-400 mb-2 md:mb-4 uppercase tracking-[0.2em]">{t.otpSent}</p>
-                        <div className="flex flex-col sm:flex-row gap-4">
+                      <div className="animate-in slide-in-from-top-2 duration-300">
+                        <p className="text-[10px] font-medium text-indigo-400 mb-2 uppercase tracking-wider">{t.otpSent}</p>
+                        <div className="flex flex-col sm:flex-row gap-3">
                           <input 
                             type="text"
                             value={otpValue}
                             onChange={e => setOtpValue(e.target.value.replace(/\D/g, '').slice(0, 6))}
                             placeholder="000000"
-                            className="flex-1 px-4 md:px-6 py-4 md:py-5 bg-black/40 border border-indigo-500/40 rounded-xl md:rounded-2xl outline-none font-mono font-black text-white text-center text-xl md:text-2xl tracking-[0.3em] md:tracking-[0.5em]"
+                            className="flex-1 px-4 py-2.5 bg-black/40 border border-indigo-500/40 rounded-lg outline-none font-mono font-medium text-white text-center text-lg tracking-widest"
                           />
                           <button 
                             onClick={verifyOtp}
                             disabled={verifying || otpValue.length !== 6}
-                            className="px-6 md:px-8 py-4 md:py-0 gold-gradient text-slate-950 rounded-xl md:rounded-2xl text-[8px] md:text-[10px] font-black uppercase tracking-widest shadow-xl shadow-yellow-500/20 flex items-center justify-center"
+                            className="px-4 py-2.5 bg-blue-600 text-white rounded-lg text-xs font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center justify-center"
                           >
                             {verifying ? <Loader2 className="animate-spin" size={16} /> : t.verifyOtp}
                           </button>
@@ -319,40 +319,40 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
                     )}
 
                     {newNominee.verified && verificationMode === 'manual' && (
-                      <div className="flex items-center gap-3 md:gap-4 text-green-400 font-black text-[10px] md:text-xs uppercase tracking-[0.3em]">
-                        <CheckCircle2 size={20} className="md:w-6 md:h-6" /> {t.verified}
+                      <div className="flex items-center gap-2 text-green-400 font-medium text-xs uppercase tracking-wider">
+                        <CheckCircle2 size={16} /> {t.verified}
                       </div>
                     )}
                   </div>
 
-                  <div className={`p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem] border-2 transition-all duration-500 ${newNominee.verified && verificationMode === 'digilocker' ? 'border-green-500 bg-green-500/5' : 'border-white/5 bg-blue-500/5'}`}>
-                    <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8">
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/20">
-                        <Shield size={20} className="md:w-6 md:h-6" />
+                  <div className={`p-5 rounded-xl border transition-all duration-300 ${newNominee.verified && verificationMode === 'digilocker' ? 'border-green-500 bg-green-500/5' : 'border-white/10 bg-black/20'}`}>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 rounded-lg bg-blue-600/20 text-blue-400 flex items-center justify-center">
+                        <Shield size={16} />
                       </div>
-                      <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">DigiLocker Gov Portal</span>
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">DigiLocker Gov Portal</span>
                     </div>
 
                     {!newNominee.verified ? (
                       <button 
                         onClick={startDigiLockerFlow}
                         disabled={verifying}
-                        className="w-full flex items-center justify-center gap-3 md:gap-4 px-6 md:px-10 py-4 md:py-5 bg-[#0061e0] text-white rounded-[1.5rem] md:rounded-[2rem] text-[9px] md:text-[11px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-lg text-xs font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors"
                       >
                         {verifying && verificationMode === 'digilocker' ? (
-                          <Loader2 size={18} className="animate-spin md:w-5 md:h-5" />
+                          <Loader2 size={16} className="animate-spin" />
                         ) : (
                           <>
-                            {t.verifyViaDigiLocker} <ExternalLink size={16} className="md:w-[18px] md:h-[18px]" />
+                            {t.verifyViaDigiLocker} <ExternalLink size={14} />
                           </>
                         )}
                       </button>
                     ) : (
-                      <div className="flex flex-col gap-3 md:gap-4">
-                         <div className="flex items-center gap-3 md:gap-4 text-green-400 font-black text-[10px] md:text-xs uppercase tracking-[0.3em]">
-                            <CheckCircle2 size={20} className="md:w-6 md:h-6" /> KYC SUCCESS
+                      <div className="flex flex-col gap-2">
+                         <div className="flex items-center gap-2 text-green-400 font-medium text-xs uppercase tracking-wider">
+                            <CheckCircle2 size={16} /> KYC SUCCESS
                          </div>
-                         <p className="text-[8px] md:text-[10px] text-slate-500 font-bold uppercase tracking-widest">Document hash linked to vault.</p>
+                         <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Document hash linked to vault.</p>
                       </div>
                     )}
                   </div>
@@ -360,80 +360,77 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
             </div>
           </div>
 
-          <div className="mt-10 md:mt-16 pt-8 md:pt-10 border-t border-white/5 flex flex-col sm:flex-row gap-4 md:gap-8">
+          <div className="mt-6 pt-5 border-t border-white/10 flex flex-col sm:flex-row gap-3">
             <button 
               onClick={() => { setIsAdding(false); resetForm(); }}
-              className="flex-1 py-4 md:py-6 rounded-[2rem] md:rounded-[2.5rem] font-black text-slate-500 hover:text-white transition-all uppercase tracking-widest text-[9px] md:text-[10px]"
+              className="flex-1 py-2.5 rounded-lg font-medium text-slate-400 hover:text-white hover:bg-white/5 transition-colors text-sm"
             >
               {t.cancel}
             </button>
             <button 
               onClick={handleSave}
               disabled={!newNominee.verified || !newNominee.name || !newNominee.mobile}
-              className="flex-[2] gold-gradient text-slate-950 py-4 md:py-6 rounded-[2rem] md:rounded-[2.5rem] font-black uppercase tracking-[0.2em] text-xs md:text-sm shadow-2xl shadow-yellow-500/20 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-20 flex items-center justify-center gap-3 md:gap-4"
+              className="flex-[2] bg-indigo-600 text-white py-2.5 rounded-lg font-medium text-sm hover:bg-indigo-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
             >
-              <UserCheck size={18} className="md:w-5 md:h-5" /> Seal Nominee Record
+              <UserCheck size={16} /> Seal Nominee Record
             </button>
           </div>
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {nominees.map(nominee => (
-          <div key={nominee.id} className="group glass-card p-6 md:p-12 rounded-[2rem] md:rounded-[4rem] flex flex-col sm:flex-row items-start gap-6 md:gap-10 relative overflow-hidden transition-all duration-700 hover:-translate-y-4">
-            <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl md:rounded-[2.5rem] flex items-center justify-center transition-all duration-500 group-hover:scale-110 ${
-              nominee.verified ? 'bg-indigo-500/10 text-indigo-400' : 'bg-slate-950/40 text-slate-700'
+          <div key={nominee.id} className="group bg-slate-900/50 p-5 rounded-xl flex flex-col sm:flex-row items-start gap-4 relative overflow-hidden transition-all duration-300 hover:bg-slate-800/80 border border-white/10">
+            <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${
+              nominee.verified ? 'bg-indigo-500/20 text-indigo-400' : 'bg-slate-800 text-slate-500'
             }`}>
-              <User size={32} className="md:w-12 md:h-12" />
+              <User size={24} />
             </div>
             
-            <div className="flex-1 space-y-4 md:space-y-6 w-full">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 md:gap-3 flex-wrap">
-                  <h4 className="font-black text-2xl md:text-4xl text-white tracking-tighter leading-none">{nominee.name}</h4>
+            <div className="flex-1 space-y-3 w-full">
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h4 className="font-bold text-lg text-white tracking-tight">{nominee.name}</h4>
                   {nominee.verified && (
-                    <div className="text-green-400 bg-green-500/5 px-2 py-1 md:px-3 rounded-full text-[7px] md:text-[8px] font-black uppercase tracking-widest flex items-center gap-1 md:gap-2 border border-green-500/20">
-                      <ShieldCheck size={10} strokeWidth={3} className="md:w-3 md:h-3" /> {t.verified}
+                    <div className="text-green-400 bg-green-500/10 px-2 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider flex items-center gap-1 border border-green-500/20">
+                      <ShieldCheck size={12} /> {t.verified}
                     </div>
                   )}
                 </div>
-                <p className="text-[8px] md:text-[10px] font-black text-indigo-400 uppercase tracking-[0.4em]">{nominee.relation}</p>
+                <p className="text-[10px] font-medium text-indigo-400 uppercase tracking-wider">{nominee.relation}</p>
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-                <div className="bg-slate-950/60 p-4 md:p-5 rounded-xl md:rounded-2xl border border-white/5">
-                  <span className="block text-[7px] md:text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-2">AUTHORIZED CONTACT</span>
-                  <p className="text-white font-bold text-sm md:text-lg tracking-widest leading-none">{nominee.mobile}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="bg-black/20 p-3 rounded-lg border border-white/5">
+                  <span className="block text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1">AUTHORIZED CONTACT</span>
+                  <p className="text-white font-medium text-sm tracking-widest">{nominee.mobile}</p>
                 </div>
-                <div className="bg-slate-950/60 p-4 md:p-5 rounded-xl md:rounded-2xl border border-white/5">
-                  <span className="block text-[7px] md:text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-2">SHARE ALLOCATION</span>
-                  <p className="text-yellow-500 font-black text-base md:text-xl leading-none">{nominee.sharePercentage}%</p>
+                <div className="bg-black/20 p-3 rounded-lg border border-white/5">
+                  <span className="block text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1">SHARE ALLOCATION</span>
+                  <p className="text-yellow-500 font-bold text-sm">{nominee.sharePercentage}%</p>
                 </div>
-                <div className={`bg-slate-950/60 p-4 md:p-5 rounded-xl md:rounded-2xl border border-white/5 ${nominee.verified ? 'ring-1 ring-green-500/20' : ''} sm:col-span-2`}>
-                  <span className="block text-[7px] md:text-[8px] font-black text-slate-600 uppercase tracking-widest mb-1 md:mb-2">IDENTITY HASH</span>
-                  <p className="text-white font-mono font-bold text-sm md:text-lg leading-none">•••• •••• {nominee.aadharNo.slice(-4)}</p>
+                <div className={`bg-black/20 p-3 rounded-lg border border-white/5 ${nominee.verified ? 'ring-1 ring-green-500/20' : ''} sm:col-span-2`}>
+                  <span className="block text-[10px] font-medium text-slate-500 uppercase tracking-wider mb-1">IDENTITY HASH</span>
+                  <p className="text-white font-mono font-medium text-sm">•••• •••• {nominee.aadharNo.slice(-4)}</p>
                 </div>
               </div>
             </div>
 
             <button 
               onClick={() => setNominees(nominees.filter(n => n.id !== nominee.id))}
-              className="absolute top-4 right-4 md:top-10 md:right-10 p-3 md:p-4 text-slate-800 hover:text-red-500 hover:bg-red-500/10 rounded-xl md:rounded-2xl transition-all opacity-100 md:opacity-0 group-hover:opacity-100"
+              className="absolute top-3 right-3 p-2 text-slate-500 hover:text-red-400 hover:bg-red-400/10 rounded-md transition-colors opacity-100 md:opacity-0 group-hover:opacity-100"
             >
-              <Trash2 size={20} className="md:w-6 md:h-6" />
+              <Trash2 size={16} />
             </button>
           </div>
         ))}
 
         {nominees.length === 0 && !isAdding && (
-          <div className="col-span-full py-32 md:py-56 text-center bg-white/[0.01] rounded-[3rem] md:rounded-[5rem] border-4 border-white/5 border-dashed group cursor-pointer hover:border-indigo-500/20 transition-all duration-1000" onClick={() => setIsAdding(true)}>
-             <div className="relative inline-block mb-8 md:mb-12">
-                <div className="absolute inset-0 bg-indigo-500/10 blur-3xl rounded-full scale-150 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="w-24 h-24 md:w-32 md:h-32 bg-white/5 rounded-[3rem] md:rounded-[4rem] border border-white/5 flex items-center justify-center text-5xl md:text-7xl relative z-10 transition-transform duration-700 group-hover:scale-110 group-hover:rotate-6">👤</div>
-             </div>
-             <h3 className="text-3xl md:text-5xl font-black text-white mb-4 md:mb-6 tracking-tighter">{t.noNominees}</h3>
-             <p className="text-slate-600 font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-10 md:mb-14 text-[9px] md:text-[11px]">Appoint a nominee to your heritage</p>
-             <button className="bg-indigo-600 text-white px-10 py-4 md:px-14 md:py-6 rounded-[2rem] md:rounded-[2.5rem] font-black uppercase tracking-widest text-[10px] md:text-xs hover:scale-105 transition-all shadow-2xl shadow-indigo-500/30">
+          <div className="col-span-full py-20 text-center bg-slate-900/30 rounded-xl border-2 border-white/10 border-dashed hover:border-indigo-500/30 transition-colors cursor-pointer" onClick={() => setIsAdding(true)}>
+             <div className="w-16 h-16 mx-auto bg-white/5 rounded-full flex items-center justify-center text-3xl mb-4 border border-white/10">👤</div>
+             <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{t.noNominees}</h3>
+             <p className="text-slate-400 font-medium text-sm mb-6">Appoint a nominee to your heritage</p>
+             <button className="bg-indigo-600 text-white px-6 py-2.5 rounded-lg font-medium text-sm hover:bg-indigo-700 transition-colors shadow-sm">
                Appoint Legal Nominee
              </button>
           </div>

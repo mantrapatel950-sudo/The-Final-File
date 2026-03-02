@@ -44,6 +44,10 @@ const getTwilioClient = () => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     if (accountSid && authToken) {
+      if (!accountSid.startsWith("AC")) {
+        console.warn("Twilio Account SID is invalid (must start with AC). Falling back to mock SMS.");
+        return null;
+      }
       try {
         twilioClient = twilio(accountSid, authToken);
       } catch (error) {
@@ -85,12 +89,12 @@ app.post("/api/auth/send-otp", async (req, res) => {
     } catch (error: any) {
       console.error("Twilio error:", error.message);
       console.log(`[MOCK SMS FALLBACK] OTP for +91${mobile} is ${otp}`);
-      return res.json({ success: true, message: "Mock OTP sent (Twilio failed)", mock: true });
+      return res.json({ success: true, message: "Mock OTP sent (Twilio failed)", mock: true, otp });
     }
   } else {
     // Fallback for demo if Twilio is not configured
     console.log(`[MOCK SMS] OTP for +91${mobile} is ${otp}`);
-    return res.json({ success: true, message: "Mock OTP sent (check server console)", mock: true });
+    return res.json({ success: true, message: "Mock OTP sent (check server console)", mock: true, otp });
   }
 });
 
