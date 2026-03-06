@@ -18,8 +18,6 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
   const [email, setEmail] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
   const [loginMode, setLoginMode] = useState<'form' | 'qr'>('form');
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -63,57 +61,19 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
   const isEmailValid = email.includes('@');
   const isNameValid = name.length > 2;
   const isFormValid = isRegistering ? (isMobileValid && isEmailValid && isNameValid) : isMobileValid;
-  const isOtpValid = otp.length === 6;
 
-  const handleSendOtp = async (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isFormValid) {
       setLoading(true);
       try {
-        const response = await fetch('/api/auth/send-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mobile }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          setOtpSent(true);
-          if (data.mock && data.otp) {
-            alert(`[DEMO MODE] Your OTP is: ${data.otp}\n\n(In a production app with Twilio configured, this would be sent via SMS)`);
-            setOtp(data.otp);
-          }
-        } else {
-          alert(data.error || 'Failed to send OTP');
-        }
+        // Simulate a successful login without OTP
+        await new Promise(resolve => setTimeout(resolve, 800));
+        setSuccess(true);
+        setTimeout(onLogin, 1000);
       } catch (error) {
-        console.error('Error sending OTP:', error);
-        alert('Failed to send OTP');
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
-  const handleVerifyOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isOtpValid) {
-      setLoading(true);
-      try {
-        const response = await fetch('/api/auth/verify-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mobile, otp }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          setSuccess(true);
-          setTimeout(onLogin, 1000);
-        } else {
-          alert(data.error || 'Invalid OTP');
-        }
-      } catch (error) {
-        console.error('Error verifying OTP:', error);
-        alert('Failed to verify OTP');
+        console.error('Login Error:', error);
+        alert('Failed to login');
       } finally {
         setLoading(false);
       }
@@ -224,8 +184,8 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
                     Back to Mobile Login
                   </button>
                 </div>
-              ) : !otpSent ? (
-                <form onSubmit={handleSendOtp} className="space-y-6 md:space-y-10">
+              ) : (
+                <form onSubmit={handleLoginSubmit} className="space-y-6 md:space-y-10">
                   {isRegistering && (
                     <>
                       <div className="space-y-3 md:space-y-4">
@@ -281,7 +241,7 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
                     {isFormValid && (
                       <div className="absolute inset-0 bg-white/20 animate-[pulse_2s_infinite] pointer-events-none"></div>
                     )}
-                    <span className="relative z-10">{loading ? <Loader2 className="animate-spin" /> : (isRegistering ? 'Create Vault' : t.sendOtp)}</span>
+                    <span className="relative z-10">{loading ? <Loader2 className="animate-spin" /> : (isRegistering ? 'Create Vault' : 'Access Vault')}</span>
                     {!loading && <ArrowRight size={24} strokeWidth={3} className={`relative z-10 ${isFormValid ? 'group-hover:translate-x-2 animate-bounce-x' : ''} transition-transform`} />}
                   </button>
 
@@ -326,47 +286,6 @@ const Login: React.FC<LoginProps> = ({ t, onLogin, onBack }) => {
                       {isMobileDevice ? <ScanLine className="text-white" size={20} /> : <QrCode className="text-white" size={20} />}
                     </div>
                     {isMobileDevice ? 'Scan QR Code' : 'Login with QR Code'}
-                  </button>
-                </form>
-              ) : (
-                <form onSubmit={handleVerifyOtp} className="space-y-8 md:space-y-10">
-                  <div className="animate-in slide-in-from-right-8 duration-500">
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-8 bg-white/5 p-4 rounded-3xl border border-white/5 text-center">
-                      <Smartphone size={20} className="text-yellow-500" />
-                      <span className="text-slate-400 font-bold tracking-wide text-sm md:text-base">OTP Sent to <strong className="text-white">+91 {mobile}</strong></span>
-                      <button onClick={() => setOtpSent(false)} className="text-yellow-500 hover:underline text-xs font-black uppercase">Edit</button>
-                    </div>
-                    
-                    <div className="space-y-4">
-                      <label className="block text-[10px] font-black text-slate-500 uppercase tracking-[0.4em] ml-2">Verification Code</label>
-                      <input
-                        type="text"
-                        value={otp}
-                        onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                        className="w-full px-6 md:px-8 py-5 md:py-7 bg-slate-950/80 border border-white/10 rounded-[2rem] md:rounded-[2.5rem] focus:ring-4 focus:ring-yellow-500/10 focus:border-yellow-500 transition-all outline-none text-center text-4xl md:text-5xl tracking-[0.3em] md:tracking-[0.5em] font-black text-white placeholder:text-slate-900"
-                        placeholder="000000"
-                        autoFocus
-                        required
-                      />
-                    </div>
-                    <p className="text-center mt-6 text-[10px] text-slate-600 font-black uppercase tracking-widest">
-                      Enter the 6-digit code received via SMS
-                    </p>
-                  </div>
-                  <button 
-                    type="submit"
-                    disabled={loading || !isOtpValid}
-                    className={`w-full py-5 md:py-7 rounded-[2rem] md:rounded-[2.5rem] font-black text-lg md:text-xl transition-all duration-500 flex items-center justify-center gap-4 group relative overflow-hidden ${
-                      isOtpValid 
-                        ? 'gold-gradient text-slate-950 shadow-[0_0_60px_rgba(212,175,55,0.5)] scale-[1.02] ring-2 ring-yellow-500/30' 
-                        : 'bg-slate-800 text-slate-500 opacity-50 cursor-not-allowed'
-                    }`}
-                  >
-                    {isOtpValid && (
-                      <div className="absolute inset-0 bg-white/20 animate-[pulse_2s_infinite] pointer-events-none"></div>
-                    )}
-                    <span className="relative z-10">{loading ? <Loader2 className="animate-spin" /> : 'Authorize Access'}</span>
-                    {!loading && <Fingerprint size={24} strokeWidth={3} className={`relative z-10 ${isOtpValid ? 'group-hover:scale-110' : ''} transition-transform`} />}
                   </button>
                 </form>
               )}

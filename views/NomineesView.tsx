@@ -17,8 +17,6 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
     sharePercentage: 0
   });
   const [verifying, setVerifying] = useState(false);
-  const [showOtpInput, setShowOtpInput] = useState(false);
-  const [otpValue, setOtpValue] = useState('');
   const [verificationMode, setVerificationMode] = useState<'manual' | 'digilocker' | null>(null);
   const [showSebiLaws, setShowSebiLaws] = useState(false);
 
@@ -41,8 +39,6 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
 
   const resetForm = () => {
     setNewNominee({ verified: false, sharePercentage: 0 });
-    setShowOtpInput(false);
-    setOtpValue('');
     setVerificationMode(null);
   };
 
@@ -52,18 +48,9 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
       setVerificationMode('manual');
       setTimeout(() => {
         setVerifying(false);
-        setShowOtpInput(true);
-      }, 1200);
+        setNewNominee({ ...newNominee, verified: true });
+      }, 1500);
     }
-  };
-
-  const verifyOtp = () => {
-    setVerifying(true);
-    setTimeout(() => {
-      setVerifying(false);
-      setNewNominee({ ...newNominee, verified: true });
-      setShowOtpInput(false);
-    }, 1500);
   };
 
   const startDigiLockerFlow = () => {
@@ -277,7 +264,7 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
                       <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Manual Aadhar Entry</span>
                     </div>
 
-                    {!showOtpInput && !newNominee.verified && (
+                    {!newNominee.verified && (
                       <div className="flex flex-col sm:flex-row gap-3">
                         <input 
                           type="text"
@@ -293,28 +280,6 @@ const NomineesView: React.FC<NomineesViewProps> = ({ nominees, setNominees, t, l
                         >
                           {verifying ? <Loader2 className="animate-spin" size={16} /> : t.verifyAadhar}
                         </button>
-                      </div>
-                    )}
-
-                    {showOtpInput && (
-                      <div className="animate-in slide-in-from-top-2 duration-300">
-                        <p className="text-[10px] font-medium text-indigo-400 mb-2 uppercase tracking-wider">{t.otpSent}</p>
-                        <div className="flex flex-col sm:flex-row gap-3">
-                          <input 
-                            type="text"
-                            value={otpValue}
-                            onChange={e => setOtpValue(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                            placeholder="000000"
-                            className="flex-1 px-4 py-2.5 bg-black/40 border border-indigo-500/40 rounded-lg outline-none font-mono font-medium text-white text-center text-lg tracking-widest"
-                          />
-                          <button 
-                            onClick={verifyOtp}
-                            disabled={verifying || otpValue.length !== 6}
-                            className="px-4 py-2.5 bg-blue-600 text-white rounded-lg text-xs font-medium hover:bg-blue-700 disabled:opacity-50 transition-colors flex items-center justify-center"
-                          >
-                            {verifying ? <Loader2 className="animate-spin" size={16} /> : t.verifyOtp}
-                          </button>
-                        </div>
                       </div>
                     )}
 
