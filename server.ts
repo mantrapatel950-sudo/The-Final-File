@@ -4,8 +4,8 @@ import { OAuth2Client } from "google-auth-library";
 import cookieParser from "cookie-parser";
 import path from "path";
 import dotenv from "dotenv";
-import twilio from "twilio";
 import Stripe from "stripe";
+import Razorpay from "razorpay";
 
 dotenv.config();
 
@@ -40,6 +40,35 @@ const getStripe = () => {
 // API route to test server
 app.get("/api/test", (req, res) => {
   res.json({ status: "server is running" });
+});
+
+// API route to create Razorpay order
+app.post("/api/create-razorpay-order", async (req, res) => {
+  try {
+    const key_id = process.env.RAZORPAY_KEY_ID || "rzp_test_dummy";
+    const key_secret = process.env.RAZORPAY_KEY_SECRET || "dummy_secret";
+    
+    if (key_id === "rzp_test_dummy") {
+      return res.json({
+        id: "order_mock_" + Math.floor(Math.random() * 1000000),
+        amount: 79900,
+        currency: "INR"
+      });
+    }
+
+    const instance = new Razorpay({ key_id, key_secret });
+    const options = {
+      amount: 79900,
+      currency: "INR",
+      receipt: "receipt_order_" + Date.now(),
+    };
+
+    const order = await instance.orders.create(options);
+    res.json(order);
+  } catch (error: any) {
+    console.error("Razorpay error:", error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // API route to create Stripe checkout session

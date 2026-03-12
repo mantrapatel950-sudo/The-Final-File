@@ -34,6 +34,16 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   const handlePayment = async () => {
     if (!selectedMethod) return;
     setIsProcessing(true);
@@ -45,20 +55,59 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
         setIsSuccess(true);
       }, 2000);
     } else if (selectedMethod === 'upi') {
-      // Use Stripe Checkout for card/UPI payments
+      // Use Razorpay for card/UPI payments
       try {
-        const response = await fetch('/api/create-checkout-session', {
+        const res = await loadRazorpayScript();
+        if (!res) {
+          alert('Razorpay SDK failed to load');
+          setIsProcessing(false);
+          return;
+        }
+
+        const response = await fetch('/api/create-razorpay-order', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
         });
         
-        const data = await response.json();
-        if (data.url) {
-          window.location.href = data.url;
+        const orderData = await response.json();
+        
+        if (orderData.id) {
+          const options = {
+            key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID || "rzp_test_dummy",
+            amount: orderData.amount,
+            currency: orderData.currency,
+            name: "My Final File",
+            description: "Premium Vault Subscription",
+            order_id: orderData.id,
+            handler: function (response: any) {
+              setIsSuccess(true);
+              setIsProcessing(false);
+            },
+            prefill: {
+              name: "User",
+              email: "user@example.com",
+              contact: "9999999999"
+            },
+            theme: {
+              color: "#d4af37"
+            },
+            modal: {
+              ondismiss: function() {
+                setIsProcessing(false);
+              }
+            }
+          };
+          
+          const rzp1 = new (window as any).Razorpay(options);
+          rzp1.on('payment.failed', function (response: any){
+            alert(response.error.description);
+            setIsProcessing(false);
+          });
+          rzp1.open();
         } else {
-          alert('Failed to initialize payment: ' + (data.error || 'Unknown error'));
+          alert('Failed to initialize payment: ' + (orderData.error || 'Unknown error'));
           setIsProcessing(false);
         }
       } catch (error) {
