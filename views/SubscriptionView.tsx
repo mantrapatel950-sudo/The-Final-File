@@ -75,7 +75,7 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
         
         if (orderData.id) {
           const options = {
-            key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID || "rzp_test_dummy",
+            key: "rzp_test_SQKtvDVvgslC0Q", // Hardcoded to avoid mismatch
             amount: orderData.amount,
             currency: orderData.currency,
             name: "My Final File",

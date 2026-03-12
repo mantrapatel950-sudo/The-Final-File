@@ -45,8 +45,9 @@ app.get("/api/test", (req, res) => {
 // API route to create Razorpay order
 app.post("/api/create-razorpay-order", async (req, res) => {
   try {
-    const key_id = process.env.RAZORPAY_KEY_ID || "rzp_test_dummy";
-    const key_secret = process.env.RAZORPAY_KEY_SECRET || "dummy_secret";
+    // Hardcoding keys as requested to avoid environment variable mismatch
+    const key_id = "rzp_test_SQKtvDVvgslC0Q";
+    const key_secret = "Wwam6PuFiwG4x6w6IqlXGj4o";
     
     if (key_id === "rzp_test_dummy") {
       return res.json({
