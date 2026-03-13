@@ -2,7 +2,6 @@
 import React from 'react';
 import { Asset, Nominee, View, Language } from '../types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie } from 'recharts';
-import GeminiAssistant from '../components/GeminiAssistant';
 import { TrendingUp, ShieldCheck, Users, ArrowUpRight, Wallet, Award, Activity, IndianRupee, Lock, ChevronRight, Sparkles } from 'lucide-react';
 
 interface DashboardProps {
@@ -172,7 +171,7 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4">
         <div className="bg-slate-900/50 p-5 rounded-xl flex flex-col min-h-[300px] border border-white/10">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-lg text-white">
@@ -210,8 +209,6 @@ const Dashboard: React.FC<DashboardProps> = ({ assets, nominees, t, setView, lan
             )}
           </div>
         </div>
-
-        <GeminiAssistant t={t} />
       </div>
 
       {/* Recent Transactions */}

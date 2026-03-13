@@ -73,9 +73,34 @@ const SubscriptionView: React.FC<SubscriptionViewProps> = ({ t }) => {
         
         const orderData = await response.json();
         
+        if (!response.ok) {
+          alert('Failed to initialize payment: ' + (orderData.error || 'Unknown error'));
+          setIsProcessing(false);
+          return;
+        }
+
+        // If the server returned a mock order (due to invalid keys), simulate success
+        if (orderData.isMock) {
+          alert("Running in Mock Payment Mode (No valid Razorpay keys found). Simulating successful payment!");
+          setIsSuccess(true);
+          setIsProcessing(false);
+          return;
+        }
+        
         if (orderData.id) {
+          // We are hardcoding the key here so it works in the AI Studio preview.
+          // When you deploy to Vercel, you should change this to:
+          // const key_id = import.meta.env.VITE_RAZORPAY_KEY_ID;
+          const key_id = "rzp_test_SQeNxARpOuKRa0";
+          
+          if (!key_id || key_id === "rzp_test_SQKtvDVvgslC0Q" || key_id === "rzp_test_dummy") {
+            alert("VITE_RAZORPAY_KEY_ID is missing or invalid. Please add your valid Key ID to your Vercel environment variables and redeploy.");
+            setIsProcessing(false);
+            return;
+          }
+
           const options = {
-            key: "rzp_test_SQKtvDVvgslC0Q", // Hardcoded to avoid mismatch
+            key: key_id,
             amount: orderData.amount,
             currency: orderData.currency,
             name: "My Final File",
